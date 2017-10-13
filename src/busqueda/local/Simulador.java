@@ -1,10 +1,5 @@
 package busqueda.local;
 
-
-import java.security.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class Simulador {
 
     public static void main(String[] args) {
