@@ -1,16 +1,21 @@
 package busqueda.local;
 
-import IA.Gasolina.CentrosDistribucion;
-import IA.Gasolina.Distribucion;
-import IA.Gasolina.Gasolinera;
-import IA.Gasolina.Gasolineras;
 
-import java.util.Iterator;
+import java.security.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Simulador {
 
     public static void main(String[] args) {
-        Gasolineras s = new Gasolineras(100, 1234);
-        CentrosDistribucion c = new CentrosDistribucion(10, 1, 1234);
+        int ncen, mult, ngas, seed;
+        ncen = 10; mult = 1; ngas = 100; seed = 1234;
+
+        long before = System.currentTimeMillis();
+        Distribuidora distribuidora = new Distribuidora(ncen, mult, ngas, seed);
+        long after = System.currentTimeMillis();
+
+        System.out.printf("Benefits obtained: %.5f \n", distribuidora.getBenefits());
+        System.out.printf("Total time (miliseconds): %d \n",after - before);
     }
 }

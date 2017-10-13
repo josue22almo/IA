@@ -17,4 +17,20 @@ public class Distribuidora {
         revenues = 0;
         expenses = 0;
     }
+
+    public float getDistanceAmount() {
+        return distanceAmount;
+    }
+
+    public float getRevenues() {
+        return revenues;
+    }
+
+    public float getExpenses() {
+        return expenses;
+    }
+
+    public float getBenefits() {
+        return revenues - expenses;
+    }
 }
