@@ -1,41 +1,56 @@
 package busqueda.local;
 
-import IA.Gasolina.Distribucion;
 import IA.Gasolina.Gasolinera;
 
+import java.util.ArrayList;
+
 public class Camion{
-    private int travels;
+    private int viajes;
     private int tanques;
-    private double availableDistance;
+    private double distanciaDisponible;
     private int coordsCentreX;
     private int coordsCentreY;
     private int coordX;
     private int coordY;
+    private double ingresos;
+    private double gastos;
 
 
     public Camion(int coordX, int coordY) {
-        travels = 5;
+        this.coordX = this.coordsCentreX = coordX;
+        this.coordY = this.coordsCentreY = coordY;
+        viajes = 5;
         tanques = 2;
-        availableDistance = 640;
+        distanciaDisponible = 640;
+        gastos = ingresos = 0;
     }
 
-    public double distanceTo(Gasolinera gasolinera){
-        int gCoordX = gasolinera.getCoordX();
-        int gCoordY = gasolinera.getCoordY();
-        return Math.sqrt((gCoordX - coordX)^2*(gCoordY - coordY)^2);
+    public void volvelOrigen(){
+        tanques = 2;
+        gastos += 2*calcularDistancia(coordsCentreX, coordsCentreY);
+        this.coordX = this.coordsCentreX;
+        this.coordX = this.coordsCentreX;
     }
 
-
-    public void atenderPeticiones(int numPeticiones){
-        tanques -= numPeticiones;
+    public double calcularDistancia(int destX, int destY){
+        return Math.sqrt((coordX-destX)^2+(coordY-destY)^2);
     }
 
-    public int getTravels() {
-        return travels;
+    public void atenderPeticion(Gasolinera gasolinera, int numPet){
+        double percent;
+        int dias = gasolinera.getPeticiones().get(numPet);
+        if(dias == 0) percent = 102;
+        else percent = 100 - Math.pow(2, dias);
+        ingresos += 1000*percent/100;
+        gastos += 2*calcularDistancia(gasolinera.getCoordX(), gasolinera.getCoordY());
     }
 
-    public void setTravels(int travels) {
-        this.travels = travels;
+    public int getViajes() {
+        return viajes;
+    }
+
+    public void setViajes(int viajes) {
+        this.viajes = viajes;
     }
 
     public int getTanques() {
@@ -46,12 +61,12 @@ public class Camion{
         this.tanques = tanques;
     }
 
-    public double getAvailableDistance() {
-        return availableDistance;
+    public double getDistanciaDisponible() {
+        return distanciaDisponible;
     }
 
-    public void setAvailableDistance(double availableDistance) {
-        this.availableDistance = availableDistance;
+    public void setDistanciaDisponible(double distanciaDisponible) {
+        this.distanciaDisponible = distanciaDisponible;
     }
 
     public int getCoordsCentreX() {
@@ -84,5 +99,9 @@ public class Camion{
 
     public void setCoordY(int coordY) {
         this.coordY = coordY;
+    }
+
+    public double getBeneficiosNetos(){
+        return ingresos - gastos;
     }
 }

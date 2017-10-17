@@ -3,8 +3,8 @@ package busqueda.local;
 
 import aima.search.framework.HeuristicFunction;
 
-public class CentralFunciHeuristica1 implements HeuristicFunction {
-    public CentralFunciHeuristica1() {
+public class CentralFuncioHeuristica1 implements HeuristicFunction {
+    public CentralFuncioHeuristica1() {
     }
 
     public boolean equals(Object obj) {
