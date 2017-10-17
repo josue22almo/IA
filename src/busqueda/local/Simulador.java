@@ -10,7 +10,7 @@ public class Simulador {
 
     public static void main(String[] args) {
         int ncen, mult, ngas, seed;
-        ncen = 10; mult = 1; ngas = 100; seed = 1234;
+        ncen = 10; mult = 1; ngas = 100; seed = 1234;// Canviar a generic
 
         Search search = new HillClimbingSearch();
         Central central = new Central(ncen, mult, ngas, seed);
