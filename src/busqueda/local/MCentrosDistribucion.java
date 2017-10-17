@@ -3,12 +3,12 @@ package busqueda.local;
 import IA.Gasolina.CentrosDistribucion;
 import IA.Gasolina.Gasolinera;
 
-public class MCentroDistribucion extends CentrosDistribucion {
+public class MCentrosDistribucion extends CentrosDistribucion {
     private float distanceTraveled;
     private int availableFuel;
     private int availableTravels;
 
-    public MCentroDistribucion(int ncen, int mult, int seed) {
+    public MCentrosDistribucion(int ncen, int mult, int seed) {
         super(ncen, mult, seed);
         distanceTraveled = 640;
         availableFuel = 2;

@@ -1,17 +1,16 @@
 package busqueda.local;
 
-import IA.Gasolina.CentrosDistribucion;
 import IA.Gasolina.Gasolineras;
 
 public class Central {
-    private static CentrosDistribucion centrosDistribucion;
+    private static MCentrosDistribucion centrosDistribucion;
     private static Gasolineras gasolineras;
     private float distanceAmount;
     private float revenues;
     private float expenses;
 
     public Central(int ncen, int mult, int ngas, int seed) {
-        centrosDistribucion = new CentrosDistribucion(ncen, mult, seed);
+        centrosDistribucion = new MCentrosDistribucion(ncen, mult, seed);
         gasolineras = new Gasolineras(ngas, seed);
         distanceAmount = 0;
         revenues = 0;
@@ -32,5 +31,13 @@ public class Central {
 
     public float getBenefits() {
         return revenues - expenses;
+    }
+
+    public static MCentrosDistribucion getCentrosDistribucion() {
+        return centrosDistribucion;
+    }
+
+    public static Gasolineras getGasolineras() {
+        return gasolineras;
     }
 }
