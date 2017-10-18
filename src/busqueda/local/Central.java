@@ -51,7 +51,7 @@ public class Central {
         return gastos;
     }
 
-    public double getBenefits() {
+    public double getBeneficiosNetos() {
         return beneficios - gastos;
     }
 
@@ -65,6 +65,7 @@ public class Central {
 
     public void atenderPeticion(Camion camion, Gasolinera gasolinera, int numPet){
         camion.atenderPeticion(gasolinera, numPet);
+        beneficios += camion.getBeneficiosNetos();
     }
 
     public Camion getCamion(int index){
