@@ -15,7 +15,7 @@ public class Camion{
     private double ingresos;
     private double gastos;
     private static int PRECIOKM = 2;
-    private static int GANANCIAPORTANQUE = 2;
+    private static int GANANCIAPORTANQUE = 1000;
 
     public Camion(int coordX, int coordY) {
         this.coordX = this.coordsCentreX = coordX;
@@ -26,7 +26,7 @@ public class Camion{
         gastos = ingresos = 0;
     }
 
-    public void volvelOrigen(){
+    public void volverAlCentroDeDistribucion(){
         tanques = 2;
         gastos += 2*calcularDistancia(coordsCentreX, coordsCentreY);
         this.coordX = this.coordsCentreX;
@@ -49,67 +49,19 @@ public class Camion{
         tanques--;
     }
 
-    public int getViajes() {
-        return viajes;
-    }
-
-    public void setViajes(int viajes) {
-        this.viajes = viajes;
-    }
-
-    public int getTanques() {
-        return tanques;
-    }
-
-    public void setTanques(int tanques) {
-        this.tanques = tanques;
-    }
-
-    public double getDistanciaDisponible() {
-        return distanciaDisponible;
-    }
-
-    public void setDistanciaDisponible(double distanciaDisponible) {
-        this.distanciaDisponible = distanciaDisponible;
-    }
-
-    public int getCoordsCentreX() {
-        return coordsCentreX;
-    }
-
-    public void setCoordsCentreX(int coordsCentreX) {
-        this.coordsCentreX = coordsCentreX;
-    }
-
-    public int getCoordsCentreY() {
-        return coordsCentreY;
-    }
-
-    public void setCoordsCentreY(int coordsCentreY) {
-        this.coordsCentreY = coordsCentreY;
-    }
-
-    public int getCoordX() {
-        return coordX;
-    }
-
-    public void setCoordX(int coordX) {
-        this.coordX = coordX;
-    }
-
-    public int getCoordY() {
-        return coordY;
-    }
-
-    public void setCoordY(int coordY) {
-        this.coordY = coordY;
-    }
-
     public double getBeneficiosNetos(){
         return ingresos - gastos;
     }
 
     public boolean puedoAtenderPeticion(Gasolinera gasolinera){
         return tanques > 0 && 2*calcularDistancia(gasolinera.getCoordX(), gasolinera.getCoordY()) <= distanciaDisponible;
+    }
+
+    public double getIngresos() {
+        return ingresos;
+    }
+
+    public double getGastos() {
+        return gastos;
     }
 }
