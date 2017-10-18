@@ -22,20 +22,20 @@ public class Central {
         distanciaRecorrida = 0;
         beneficios = 0;
         gastos = 0;
-        fillCamiones();
-
+        camiones = new ArrayList<>();
     }
 
-    private void fillCamiones() {
-        camiones = new ArrayList<>();
-        for (Distribucion distribucion : centrosDistribucion) {
-            camiones.add(new Camion(distribucion.getCoordX(), distribucion.getCoordY()));
-        }
+    public Central(Central central){
+        this.gasolineras = central.gasolineras;
+        this.camiones = central.camiones;
+        this.distanciaRecorrida = central.distanciaRecorrida;
+        this.beneficios = central.beneficios;
+        this.gastos = central.gastos;
     }
 
     public void solucion1() {
-        for (Camion camion: camiones){
-
+        for (Distribucion distribucion : centrosDistribucion) {
+            camiones.add(new Camion(distribucion.getCoordX(), distribucion.getCoordY()));
         }
     }
 
