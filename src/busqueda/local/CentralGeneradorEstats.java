@@ -15,21 +15,30 @@ public class CentralGeneradorEstats implements SuccessorFunction {
 
     @Override
     public List getSuccessors(Object o) {
+    	
     	ArrayList sucesores = new ArrayList();
-    	Central c1 = (Central) o;
+    	Central estado = (Central) o;
     	CentralFuncioHeuristica1 fh = new CentralFuncioHeuristica1();
-    	int numcamiones = c1.getCamiones().size();
-    	int numgasolineras = c1.getGasolineras().size();
-    	for (int camionI = 0; camionI < numcamiones; ++camionI) {
-    		for (int  gasolineraJ = 0; gasolineraJ < numgasolineras; ++gasolineraJ) {
-    			Central c2 = new Central(numcamiones,1,numgasolineras,1234);
-    			int numpeticiones = c1.getGasolineras().get(gasolineraJ).getPeticiones().size();
-    			c1.atenderPeticion(camionI, gasolineraJ, numpeticiones);
-    			double valor = fh.getHeuristicValue(c2);
-    			String S = "intercambio ("+camionI+","+gasolineraJ+")"+"Costes:"+valor+c2.toString();
-    			sucesores.add(new Successor(S,c2));
+    	int numCamiones = estado.getCamiones().size();
+    	int numGasolineras = estado.getGasolineras().size();
+    	
+    	for (int camionI = 0; camionI < numCamiones; ++camionI) {
+    		for (int  gasolineraJ = 0; gasolineraJ < numGasolineras; ++gasolineraJ) {
+    			int numPeticiones = estado.getGasolineras().get(gasolineraJ).getPeticiones().size();
+    			for (int peticionK = 0; peticionK < numPeticiones; ++k) {
+    				Central estadoActual = new Central(estado);
+    				Camion camion = estado.getCamion(camionI);
+    				Gasolinera gasolinera = estado.getGasolinera(gasolineraJ);
+    				if (camion.puedeAtenderPeticion(gasolinera)) {
+    					estado.atenderPeticion(camionI, gasolineraJ, peticionK);
+    				}
+    				double valor = fh.getHeuristicValue(estadoActual);
+    				String S = "Atender peticion ("+camionI+","+gasolineraJ+","+peticionK+")"+"Costes:"+valor+estadoActual.toString();
+    				sucesores.add(new Successor(S,estadoActual));
+    			}
     		}
     	}
         return sucesores;
     }
 }
+
