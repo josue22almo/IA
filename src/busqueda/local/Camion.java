@@ -27,6 +27,7 @@ public class Camion{
     }
 
     public void volverAlCentroDeDistribucion(){
+        --viajes;
         tanques = 2;
         gastos += 2*calcularDistancia(coordsCentreX, coordsCentreY);
         this.coordX = this.coordsCentreX;
