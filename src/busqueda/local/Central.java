@@ -63,8 +63,7 @@ public class Central {
         return camiones;
     }
 
-    public void atenderPeticion(Camion camion, int gasolineraJ, int numPet){
-        Gasolinera gasolinera = gasolineras.get(gasolineraJ);
+    public void atenderPeticion(Camion camion, Gasolinera gasolinera, int numPet){
         camion.atenderPeticion(gasolinera, numPet);
     }
 
