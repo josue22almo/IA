@@ -21,8 +21,9 @@ public class Simulador {
             long before = System.currentTimeMillis();
             SearchAgent agent = new SearchAgent(problem, search);
             long after = System.currentTimeMillis();
+            Central centralEstadoFinal = (Central)((Search)search).getGoalState();
 
-            System.out.printf("Benefits obtained: %.5f \n", central.getBenefits());
+            System.out.printf("Benefits obtained: %.5f \n", centralEstadoFinal.getBenefits());
             System.out.printf("Total time: %d ms\n", after - before);
         } catch (Exception e) {
             e.printStackTrace();
