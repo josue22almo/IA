@@ -14,7 +14,8 @@ public class Camion{
     private int coordY;
     private double ingresos;
     private double gastos;
-
+    private static int PRECIOKM = 2;
+    private static int GANANCIAPORTANQUE = 2;
 
     public Camion(int coordX, int coordY) {
         this.coordX = this.coordsCentreX = coordX;
@@ -41,8 +42,11 @@ public class Camion{
         int dias = gasolinera.getPeticiones().get(numPet);
         if(dias == 0) percent = 102;
         else percent = 100 - Math.pow(2, dias);
-        ingresos += 1000*percent/100;
-        gastos += 2*calcularDistancia(gasolinera.getCoordX(), gasolinera.getCoordY());
+        ingresos += GANANCIAPORTANQUE*percent/100;
+        double distRecorrida = calcularDistancia(gasolinera.getCoordX(), gasolinera.getCoordY());
+        gastos += PRECIOKM*distRecorrida;
+        distanciaDisponible -= distRecorrida;
+        tanques--;
     }
 
     public int getViajes() {
@@ -103,5 +107,9 @@ public class Camion{
 
     public double getBeneficiosNetos(){
         return ingresos - gastos;
+    }
+
+    public boolean puedoAtenderPeticion(Gasolinera gasolinera){
+        return tanques > 0 && 2*calcularDistancia(gasolinera.getCoordX(), gasolinera.getCoordY()) <= distanciaDisponible;
     }
 }
