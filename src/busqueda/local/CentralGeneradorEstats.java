@@ -26,15 +26,15 @@ public class CentralGeneradorEstats implements SuccessorFunction {
     		for (int  gasolineraJ = 0; gasolineraJ < numGasolineras; ++gasolineraJ) {
     			int numPeticiones = estado.getGasolineras().get(gasolineraJ).getPeticiones().size();
     			for (int peticionK = 0; peticionK < numPeticiones; ++peticionK) {
-    				Central estadoActual = new Central(estado);
+    				Central nuevoEstado = new Central(estado);
     				Camion camion = estado.getCamion(camionI);
     				Gasolinera gasolinera = estado.getGasolinera(gasolineraJ);
     				if (camion.puedoAtenderPeticion(gasolinera)) {
     					estado.atenderPeticion(camion,gasolinera, peticionK);
     				}
-    				double valor = fh.getHeuristicValue(estadoActual);
-    				String S = "Atender peticion ("+camionI+","+gasolineraJ+","+peticionK+")"+"Costes:"+valor+estadoActual.toString();
-    				sucesores.add(new Successor(S,estadoActual));
+    				double valor = fh.getHeuristicValue(nuevoEstado);
+    				String S = "Atender peticion ("+camionI+","+gasolineraJ+","+peticionK+")"+"Costes:"+valor+nuevoEstado.toString();
+    				sucesores.add(new Successor(S,nuevoEstado));
     			}
     		}
     	}
