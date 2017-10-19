@@ -14,14 +14,16 @@ public class Simulador {
 
         Search search = new HillClimbingSearch();
         Central central = new Central(ncen, mult, ngas, seed);
+        central.solucion1();
         Problem problem = new Problem(central, new CentralGeneradorEstats(), new CentralEstatFinal());
 
         try {
             long before = System.currentTimeMillis();
             SearchAgent agent = new SearchAgent(problem, search);
             long after = System.currentTimeMillis();
+            Central centralEstadoFinal = (Central)search.getGoalState();
 
-            System.out.printf("Benefits obtained: %.5f \n", central.getBenefits());
+            System.out.printf("Benefits obtained: %.2f \n", centralEstadoFinal.getBeneficiosNetos());
             System.out.printf("Total time: %d ms\n", after - before);
         } catch (Exception e) {
             e.printStackTrace();

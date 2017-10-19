@@ -12,47 +12,29 @@ public class Central {
     private Gasolineras gasolineras;
     private static CentrosDistribucion centrosDistribucion;
     private List<Camion> camiones;
-    private double distanciaRecorrida;
-    private double beneficios;
-    private double gastos;
 
     public Central(int ncen, int mult, int ngas, int seed) {
         centrosDistribucion = new CentrosDistribucion(ncen, mult, seed);
         gasolineras = new Gasolineras(ngas, seed);
-        distanciaRecorrida = 0;
-        beneficios = 0;
-        gastos = 0;
-        fillCamiones();
-
+        camiones = new ArrayList<>();
     }
 
-    private void fillCamiones() {
-        camiones = new ArrayList<>();
+    public Central(Central central){
+        this.gasolineras = central.gasolineras;
+        this.camiones = central.camiones;
+    }
+
+    public void solucion1() {
         for (Distribucion distribucion : centrosDistribucion) {
             camiones.add(new Camion(distribucion.getCoordX(), distribucion.getCoordY()));
         }
     }
 
-    public void solucion1() {
-        for (Camion camion: camiones){
-
-        }
-    }
-
-    public double getdistanciaRecorrida() {
-        return distanciaRecorrida;
-    }
-
-    public double getbeneficios() {
-        return beneficios;
-    }
-
-    public double getgastos() {
-        return gastos;
-    }
-
-    public double getBenefits() {
-        return beneficios - gastos;
+    public double getBeneficiosNetos() {
+        double beneficioNeto = 0;
+        for (Camion camion : camiones)
+            beneficioNeto += camion.getBeneficiosNetos();
+        return beneficioNeto;
     }
 
     public Gasolineras getGasolineras() {
@@ -63,9 +45,26 @@ public class Central {
         return camiones;
     }
 
-    public void atenderPeticion(int camionI, int gasolineraJ, int numPet){
-        Camion camion = camiones.get(camionI);
-        Gasolinera gasolinera = gasolineras.get(gasolineraJ);
+    public void atenderPeticion(int indexCamion, int indexGasolinera, int numPet){
+        Camion camion = camiones.get(indexCamion);
+        Gasolinera gasolinera = gasolineras.get(indexGasolinera);
         camion.atenderPeticion(gasolinera, numPet);
+        gasolinera.getPeticiones().remove(numPet);
+    }
+
+    public void desplazarCamionASuCentroDeDistribucion(int indexCamion) {
+        camiones.get(indexCamion).volverAlCentroDeDistribucion();
+    }
+
+    public Camion getCamion(int index){
+        return camiones.get(index);
+    }
+
+    public Gasolinera getGasolinera(int index){
+        return gasolineras.get(index);
+    }
+
+    public boolean camionPuedeAtenderPeticion(int indexCamion, Gasolinera gasolinera) {
+        return camiones.get(indexCamion).puedoAtenderPeticion(gasolinera);
     }
 }
