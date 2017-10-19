@@ -12,16 +12,16 @@ public class Central {
     private Gasolineras gasolineras;
     private static CentrosDistribucion centrosDistribucion;
     private List<Camion> camiones;
-    private double distanceAmount;
-    private double revenues;
-    private double expenses;
+    private double distanciaRecorrida;
+    private double beneficios;
+    private double gastos;
 
     public Central(int ncen, int mult, int ngas, int seed) {
         centrosDistribucion = new CentrosDistribucion(ncen, mult, seed);
         gasolineras = new Gasolineras(ngas, seed);
-        distanceAmount = 0;
-        revenues = 0;
-        expenses = 0;
+        distanciaRecorrida = 0;
+        beneficios = 0;
+        gastos = 0;
         fillCamiones();
 
     }
@@ -39,20 +39,20 @@ public class Central {
         }
     }
 
-    public double getDistanceAmount() {
-        return distanceAmount;
+    public double getdistanciaRecorrida() {
+        return distanciaRecorrida;
     }
 
-    public double getRevenues() {
-        return revenues;
+    public double getbeneficios() {
+        return beneficios;
     }
 
-    public double getExpenses() {
-        return expenses;
+    public double getgastos() {
+        return gastos;
     }
 
     public double getBenefits() {
-        return revenues - expenses;
+        return beneficios - gastos;
     }
 
     public Gasolineras getGasolineras() {
@@ -63,13 +63,9 @@ public class Central {
         return camiones;
     }
 
-    public void desplazarCamionAGasolinera(int camionI, int gasolineraJ){
+    public void atenderPeticion(int camionI, int gasolineraJ, int numPet){
         Camion camion = camiones.get(camionI);
         Gasolinera gasolinera = gasolineras.get(gasolineraJ);
-        double distanciaRecorrida = camion.distanceTo(gasolinera);
-    }
-
-    private double calcularDistancia(int oriX, int oriY, int destX, int destY){
-        return Math.sqrt((oriX-destX)^2+(oriY-destY)^2);
+        camion.atenderPeticion(gasolinera, numPet);
     }
 }
