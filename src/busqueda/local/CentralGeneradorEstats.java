@@ -46,8 +46,6 @@ public class CentralGeneradorEstats implements SuccessorFunction {
 				}
     		}
     	}
-		System.out.printf("Estados añadidos = %d - peticiones atendidas %d - vueltas al centro %d", estadosAnadidos, peticionesAtendidas, vueltasCentro);
-		System.out.println();
         return sucesores;
     }
 }
