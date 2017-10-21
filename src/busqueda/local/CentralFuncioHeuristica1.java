@@ -13,6 +13,6 @@ public class CentralFuncioHeuristica1 implements HeuristicFunction {
     }
 
     public double getHeuristicValue(Object state) {
-        return 0; //modificar
+        return ((Central)state).getBeneficiosNetos(); //modificar
     }
 }
