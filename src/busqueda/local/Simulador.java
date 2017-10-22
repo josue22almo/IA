@@ -15,7 +15,7 @@ public class Simulador {
         Search search = new HillClimbingSearch();
         Central central = new Central(ncen, mult, ngas, seed);
         central.solucion1();
-        Problem problem = new Problem(central, new CentralGeneradorEstats(), new CentralEstatFinal());
+        Problem problem = new Problem(central, new CentralGeneradorEstats(), new CentralEstatFinal(), new CentralFuncioHeuristica1());
 
         try {
             long before = System.currentTimeMillis();

@@ -20,9 +20,8 @@ public class CentralGeneradorEstats implements SuccessorFunction {
     	Central estado = (Central) o;
     	int numCamiones = estado.getCamiones().size();
     	int numGasolineras = estado.getGasolineras().size();
-		int estadosAnadidos = 0;
-		int peticionesAtendidas = 0;
-		int vueltasCentro = 0;
+    	CentralFuncioHeuristica1 FH = new CentralFuncioHeuristica1();
+
     	for (int camionI = 0; camionI < numCamiones; ++camionI) {
 			loopgasolineras:
     		for (int  gasolineraJ = 0; gasolineraJ < numGasolineras; ++gasolineraJ) {
@@ -31,23 +30,19 @@ public class CentralGeneradorEstats implements SuccessorFunction {
 					Central nuevoEstado = new Central(estado);
 					if(nuevoEstado.camionPuedeAtenderPeticion(camionI, gasolinera)){
 						nuevoEstado.atenderPeticion(camionI, gasolineraJ, peticionK);
-						String S = "Atender peticion ("+camionI+","+gasolineraJ+","+peticionK+")";
+						double v = FH.getHeuristicValue(nuevoEstado);
+						String S = "Atender peticion ("+camionI+", "+gasolineraJ+", "+peticionK+", "+v+")";
 						sucesores.add(new Successor(S,nuevoEstado));
-						++estadosAnadidos;
-						++peticionesAtendidas;
 					} else if (nuevoEstado.getCamion(camionI).getViajes() >= 0) {
 						nuevoEstado.desplazarCamionASuCentroDeDistribucion(camionI);
-						String S = "Atender peticion ("+camionI+","+gasolineraJ+","+peticionK+")";
+						double v = FH.getHeuristicValue(nuevoEstado);
+						String S = "Atender peticion ("+camionI+","+gasolineraJ+","+peticionK+", "+v+")";
 						sucesores.add(new Successor(S,nuevoEstado));
-						++estadosAnadidos;
-						++vueltasCentro;
 					} else
 						break loopgasolineras;
 				}
     		}
     	}
-		System.out.printf("Estados añadidos = %d - peticiones atendidas %d - vueltas al centro %d", estadosAnadidos, peticionesAtendidas, vueltasCentro);
-		System.out.println();
         return sucesores;
     }
 }
