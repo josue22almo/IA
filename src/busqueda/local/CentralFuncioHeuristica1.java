@@ -12,6 +12,7 @@ public class CentralFuncioHeuristica1 implements HeuristicFunction {
 
     public double getHeuristicValue(Object state) {
         Central central = (Central)state;
+        //System.out.println(central.getBeneficiosNetos());
         return central.getBeneficiosNetos();
         //return 0;
     }
