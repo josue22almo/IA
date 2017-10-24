@@ -26,8 +26,22 @@ public class Central {
 
     public void solucion1() {
         for (Distribucion distribucion : centrosDistribucion) {
-            camiones.add(new Camion(distribucion.getCoordX(), distribucion.getCoordY()));
+            camiones.add(new Camion(distribucion));
         }
+    }
+
+    //desplazamos todos los camiones a alguna gasolinera
+    public void solucion2(){
+        solucion1();
+        for (Camion camion : camiones)
+            break;
+    }
+
+    //desplazamos numCamiones a alguna gasolinera
+    public void solucion3(int numCamiones){
+        solucion1();
+        for (Camion camion : camiones)
+            break;
     }
 
     public double getBeneficiosNetos() {

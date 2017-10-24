@@ -1,5 +1,6 @@
 package busqueda.local;
 
+import IA.Gasolina.Distribucion;
 import IA.Gasolina.Gasolinera;
 
 
@@ -17,9 +18,9 @@ public class Camion{
     private static int PRECIOKM = 2;
     private static int GANANCIAPORTANQUE = 1000;
 
-    public Camion(int coordX, int coordY) {
-        this.coordX = this.coordsCentreX = coordX;
-        this.coordY = this.coordsCentreY = coordY;
+    public Camion(Distribucion distribucion) {
+        this.coordX = this.coordsCentreX = distribucion.getCoordX();
+        this.coordY = this.coordsCentreY = distribucion.getCoordY();
         viajes = 5;
         tanques = 2;
         distanciaDisponible = 640;
