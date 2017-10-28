@@ -11,7 +11,7 @@ import java.util.List;
 public class Central {
     private Gasolineras gasolineras;
     private static CentrosDistribucion centrosDistribucion;
-    private List<Camion> camiones;
+    private ArrayList<Camion> camiones;
 
     public Central(int ncen, int mult, int ngas, int seed) {
         centrosDistribucion = new CentrosDistribucion(ncen, mult, seed);
@@ -19,9 +19,19 @@ public class Central {
         camiones = new ArrayList<>();
     }
 
-    public Central(Central central){
+    /*public Central(Central central){
         this.gasolineras = central.gasolineras;
         this.camiones = central.camiones;
+    }*/
+
+    public Central(Gasolineras g, CentrosDistribucion cd, ArrayList<Camion> lc){
+        gasolineras = (Gasolineras)g.clone();
+        camiones = new ArrayList<>();
+        for(int i=0; i < lc.size(); i++){
+            Camion cloncamion = new Camion(lc.get(i));
+            camiones.add(cloncamion);
+        }
+
     }
 
     public void solucion1() {
@@ -35,6 +45,10 @@ public class Central {
         solucion1();
         for (Camion camion : camiones)
             break;
+    }
+
+    public static CentrosDistribucion getCentrosDistribucion() {
+        return centrosDistribucion;
     }
 
     //desplazamos numCamiones a alguna gasolinera
@@ -51,11 +65,40 @@ public class Central {
         return beneficioNeto;
     }
 
+    public double getPerdidasDiaSiguiente() {
+        double perdidas = 0;
+        for(Gasolinera gasolinera : gasolineras){
+            ArrayList peticiones = gasolinera.getPeticiones();
+            for(int i = 0; i<peticiones.size(); ++i){
+                double actual;
+                int dias = (int)peticiones.get(i);
+                if(dias == 0) actual = 1000*102;
+                else actual = 1000*Math.pow(2,dias);
+
+                double nuevo = 1000*Math.pow(2,dias+1);
+                perdidas += actual-nuevo;
+            }
+        }
+        return perdidas;
+    }
+
+    public double getTotalIngresos() {
+        double ingresosTotales = 0;
+        for (Camion camion : camiones) ingresosTotales += camion.getIngresos();
+        return ingresosTotales;
+    }
+
+    public double getTotalGastos() {
+        double gastosTotales = 0;
+        for (Camion camion : camiones) gastosTotales += camion.getGastos();
+        return gastosTotales;
+    }
+
     public Gasolineras getGasolineras() {
         return gasolineras;
     }
 
-    public List<Camion> getCamiones(){
+    public ArrayList<Camion> getCamiones(){
         return camiones;
     }
 

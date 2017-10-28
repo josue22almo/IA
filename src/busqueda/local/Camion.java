@@ -28,6 +28,21 @@ public class Camion{
         peticionesAtendidas = 0;
     }
 
+    public Camion(Camion c){
+        viajes = c.getViajes();
+        tanques = c.getTanques();
+        distanciaDisponible = c.getDistanciaDisponible();
+        coordsCentreX = c.getCoordsCentreX();
+        coordsCentreY = c.getCoordsCentreY();
+        coordX = c.getCoordX();
+        coordY = c.getCoordY();
+        ingresos = c.getIngresos();
+        gastos = c.getGastos();
+        peticionesAtendidas = c.getPeticionesAtendidas();
+
+    }
+
+
     public void volverAlCentroDeDistribucion(){
         if (this.coordX != this.coordsCentreX && this.coordY != this.coordsCentreY) {
             viajes = --viajes;
@@ -84,5 +99,73 @@ public class Camion{
                 + " viajes disponibles " + viajes + " tanques disponibles " + String.valueOf(tanques) +  " peticones atendidas " +
                 String.valueOf(peticionesAtendidas) + " ganancias = " + String.valueOf(getBeneficiosNetos()) + " km restantes " +
                 String.valueOf(distanciaDisponible);
+    }
+
+    public int getTanques() {
+        return tanques;
+    }
+
+    public double getDistanciaDisponible() {
+        return distanciaDisponible;
+    }
+
+    public int getCoordsCentreX() {
+        return coordsCentreX;
+    }
+
+    public int getCoordsCentreY() {
+        return coordsCentreY;
+    }
+
+    public int getCoordX() {
+        return coordX;
+    }
+
+    public int getCoordY() {
+        return coordY;
+    }
+
+    public int getPeticionesAtendidas() {
+        return peticionesAtendidas;
+    }
+
+    public void setViajes(int viajes) {
+        this.viajes = viajes;
+    }
+
+    public void setTanques(int tanques) {
+        this.tanques = tanques;
+    }
+
+    public void setDistanciaDisponible(double distanciaDisponible) {
+        this.distanciaDisponible = distanciaDisponible;
+    }
+
+    public void setCoordsCentreX(int coordsCentreX) {
+        this.coordsCentreX = coordsCentreX;
+    }
+
+    public void setCoordsCentreY(int coordsCentreY) {
+        this.coordsCentreY = coordsCentreY;
+    }
+
+    public void setCoordX(int coordX) {
+        this.coordX = coordX;
+    }
+
+    public void setCoordY(int coordY) {
+        this.coordY = coordY;
+    }
+
+    public void setIngresos(double ingresos) {
+        this.ingresos = ingresos;
+    }
+
+    public void setGastos(double gastos) {
+        this.gastos = gastos;
+    }
+
+    public void setPeticionesAtendidas(int peticionesAtendidas) {
+        this.peticionesAtendidas = peticionesAtendidas;
     }
 }

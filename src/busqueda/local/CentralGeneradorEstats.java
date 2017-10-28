@@ -27,17 +27,17 @@ public class CentralGeneradorEstats implements SuccessorFunction {
     		for (int  gasolineraJ = 0; gasolineraJ < numGasolineras; ++gasolineraJ) {
 				Gasolinera gasolinera = estado.getGasolinera(gasolineraJ);
 				for (int peticionK = 0; peticionK < gasolinera.getPeticiones().size(); ++peticionK) {
-					Central nuevoEstado = new Central(estado);
+					Central nuevoEstado = new Central(estado.getGasolineras(), estado.getCentrosDistribucion(), estado.getCamiones());
 					if(nuevoEstado.camionPuedeAtenderPeticion(camionI, gasolinera)){
 						nuevoEstado.atenderPeticion(camionI, gasolineraJ, peticionK);
 						double v = FH.getHeuristicValue(nuevoEstado);
-						String S = "Atender peticion ("+camionI+", "+gasolineraJ+", "+peticionK+", "+v+")";
+                        String S = "Atender peticion (Camion: "+camionI+",Gasolinera: "+gasolineraJ+", Peticion: "+peticionK+", Heuristico: "+v+")";
 						System.out.println(S);
 						sucesores.add(new Successor(S,nuevoEstado));
 					} else if (nuevoEstado.getCamion(camionI).getViajes() >= 0) {
 						nuevoEstado.desplazarCamionASuCentroDeDistribucion(camionI);
 						double v = FH.getHeuristicValue(nuevoEstado);
-						String S = "Atender peticion ("+camionI+","+gasolineraJ+","+peticionK+", "+v+")";
+						String S = "Atender peticion (Camion: "+camionI+",Gasolinera: "+gasolineraJ+", Peticion: "+peticionK+", Heuristico: "+v+")";
 						sucesores.add(new Successor(S,nuevoEstado));
 					} else
 						break loopgasolineras;
