@@ -8,11 +8,8 @@ public class CentralFuncioHeuristica1 implements HeuristicFunction {
         return super.equals(obj);
     }
 
-
-
     public double getHeuristicValue(Object state) {
         Central central = (Central)state;
-        return central.getBeneficiosNetos();
-        //return 0;
+        return 1/central.getBeneficiosNetos();
     }
 }

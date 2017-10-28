@@ -28,15 +28,26 @@ public class Camion{
         peticionesAtendidas = 0;
     }
 
+    public Camion(Camion camion){
+        viajes = camion.viajes;
+        tanques = camion.tanques;
+        distanciaDisponible = camion.distanciaDisponible;
+        coordsCentreX = camion.coordsCentreX;
+        coordsCentreY = camion.coordsCentreY;
+        coordX = camion.coordX;
+        coordY = camion.coordY;
+        ingresos = camion.ingresos;
+        gastos = camion.gastos;
+        peticionesAtendidas = camion.peticionesAtendidas;
+    }
     public void volverAlCentroDeDistribucion(){
-        if (this.coordX != this.coordsCentreX && this.coordY != this.coordsCentreY) {
-            viajes = --viajes;
-            tanques = 2;
-            gastos += 2 * calcularDistancia(coordsCentreX, coordsCentreY);
-            distanciaDisponible -=  calcularDistancia(coordsCentreX, coordsCentreY);
-            this.coordX = this.coordsCentreX;
-            this.coordY = this.coordsCentreY;
-        }
+        viajes = --viajes;
+        tanques = 2;
+        gastos += 2 * calcularDistancia(coordsCentreX, coordsCentreY);
+        distanciaDisponible -=  calcularDistancia(coordsCentreX, coordsCentreY);
+        this.coordX = this.coordsCentreX;
+        this.coordY = this.coordsCentreY;
+
     }
 
     public double calcularDistancia(int destX, int destY){
@@ -54,8 +65,26 @@ public class Camion{
         gastos += PRECIOKM*distRecorrida;
         distanciaDisponible -= distRecorrida;
         tanques--;
-        coordY = gasolinera.getCoordY();
-        coordX = gasolinera.getCoordX();
+        setCoordsFromGasolinera(gasolinera);
+    }
+
+    public void atenderMaxPeticiones(Gasolinera gasolinera){
+        int i = gasolinera.getPeticiones().size()-1;
+        while(tanques > 0 && i >= 0){
+            int diasPeticion = gasolinera.getPeticiones().get(i);
+            double percent;
+            if(diasPeticion == 0) percent = 102;
+            else percent = 100 - Math.pow(2, diasPeticion);
+            ingresos += GANANCIAPORTANQUE*percent/100;
+            gasolinera.getPeticiones().remove(i);
+            --i;
+            --tanques;
+            ++peticionesAtendidas;
+        }
+        double distRecorrida = calcularDistancia(gasolinera.getCoordX(), gasolinera.getCoordY());
+        gastos += PRECIOKM*distRecorrida;
+        distanciaDisponible -= distRecorrida;
+        setCoordsFromGasolinera(gasolinera);
     }
 
     public double getBeneficiosNetos(){
@@ -74,6 +103,10 @@ public class Camion{
         return gastos;
     }
 
+    public boolean estoyEnElCentroDistribucion(){
+        return coordsCentreX == coordX && coordsCentreY == coordY;
+    }
+
     public int getViajes() {
         return viajes;
     }
@@ -84,5 +117,10 @@ public class Camion{
                 + " viajes disponibles " + viajes + " tanques disponibles " + String.valueOf(tanques) +  " peticones atendidas " +
                 String.valueOf(peticionesAtendidas) + " ganancias = " + String.valueOf(getBeneficiosNetos()) + " km restantes " +
                 String.valueOf(distanciaDisponible);
+    }
+
+    public void setCoordsFromGasolinera(Gasolinera gasolinera) {
+        coordY = gasolinera.getCoordY();
+        coordX = gasolinera.getCoordX();
     }
 }

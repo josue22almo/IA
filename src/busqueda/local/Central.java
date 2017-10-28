@@ -12,42 +12,75 @@ public class Central {
     private Gasolineras gasolineras;
     private static CentrosDistribucion centrosDistribucion;
     private List<Camion> camiones;
+    private int numGasolineras;
+    private int seed;
+    private int mult;
 
     public Central(int ncen, int mult, int ngas, int seed) {
         centrosDistribucion = new CentrosDistribucion(ncen, mult, seed);
         gasolineras = new Gasolineras(ngas, seed);
         camiones = new ArrayList<>();
+        numGasolineras = ngas;
+        this.mult = mult;
+        this.seed = seed;
     }
 
     public Central(Central central){
         this.gasolineras = central.gasolineras;
-        this.camiones = central.camiones;
+        copiarCapiones(central);
+        copiarGasolineras(central);
     }
 
-    public void solucion1() {
+    private void copiarGasolineras(Central central) {
+        gasolineras = new Gasolineras(numGasolineras, seed);
+        gasolineras.clear();
+        for (Gasolinera gasolinera : central.gasolineras){
+            int coordX = gasolinera.getCoordX();
+            int coordY = gasolinera.getCoordY();
+            ArrayList<Integer> peticiones = new ArrayList<>();
+            for (int peticion : gasolinera.getPeticiones())
+                peticiones.add(peticion);
+            gasolineras.add(new Gasolinera(coordX, coordY, peticiones));
+        }
+    }
+
+    private void copiarCapiones(Central central) {
+        camiones = new ArrayList<>();
+        for (Camion camion : central.camiones)
+            camiones.add(new Camion(camion));
+    }
+
+    public void aplicarSolucion1() {
         for (Distribucion distribucion : centrosDistribucion) {
             camiones.add(new Camion(distribucion));
         }
     }
 
     //desplazamos todos los camiones a alguna gasolinera
-    public void solucion2(){
-        solucion1();
-        for (Camion camion : camiones)
-            break;
+    public void aplicarSolucion2(){
+        aplicarSolucion1();
+        int i = 0;
+        int numGasolineras = gasolineras.size();
+        for (Camion camion : camiones) {
+            Gasolinera gasolinera = gasolineras.get(i % numGasolineras);
+            camion.atenderMaxPeticiones(gasolinera);
+            ++i;
+        }
     }
 
     //desplazamos numCamiones a alguna gasolinera
-    public void solucion3(int numCamiones){
-        solucion1();
+    public void aplicarSolucion3(int numCamiones){
+        aplicarSolucion1();
         for (Camion camion : camiones)
             break;
     }
 
     public double getBeneficiosNetos() {
         double beneficioNeto = 0;
-        for (Camion camion : camiones)
-            beneficioNeto += camion.getBeneficiosNetos();
+        for (Camion camion : camiones){
+            if (camion.estoyEnElCentroDistribucion())
+                beneficioNeto += camion.getBeneficiosNetos();
+        }
         return beneficioNeto;
     }
 
