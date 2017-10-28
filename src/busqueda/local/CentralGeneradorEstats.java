@@ -33,7 +33,7 @@ public class CentralGeneradorEstats implements SuccessorFunction {
 						double v = FH.getHeuristicValue(nuevoEstado);
 						String S = "Atender peticion ("+camionI+", "+gasolineraJ+", "+peticionK+", "+v+")";
 						sucesores.add(new Successor(S,nuevoEstado));
-					} else if (nuevoEstado.getCamion(camionI).getViajes() >= 0) {
+					} else if (nuevoEstado.getCamion(camionI).getViajes() > 0) {
 						nuevoEstado.desplazarCamionASuCentroDeDistribucion(camionI);
 						double v = FH.getHeuristicValue(nuevoEstado);
 						String S = "Atender peticion ("+camionI+","+gasolineraJ+","+peticionK+", "+v+")";
