@@ -12,30 +12,30 @@ public class CentralFuncioHeuristica1 implements HeuristicFunction {
 
 
     // Ingresos - Gastos totales por estado
-    public double getHeuristicValue(Object state) {
+    public double getHeuristicValue0(Object state) {
         Central central = (Central)state;
-        return central.getBeneficiosNetos();
+        return 1/central.getBeneficiosNetos();
     }
 
 
     //Ingresos/Gastos totales por estado
     public double getHeuristicValue2(Object state) {
         Central central = (Central)state;
-        return central.getTotalIngresos()/central.getTotalGastos();
+        return 1/(central.getTotalIngresos()/central.getTotalGastos());
 
     }
 
     //Intenta reducir las perdidas del dia siguiente
     public double getHeuristicValue3(Object state) {
         Central cental = (Central)state;
-        return 1/cental.getPerdidasDiaSiguiente();
+        return cental.getPerdidasDiaSiguiente();
 
     }
 
     //Beneficios - perdidas dia siguiente
-    public double getHeuristicValue4(Object state) {
+    public double getHeuristicValue(Object state) {
         Central central = (Central)state;
-        return central.getBeneficiosNetos()-central.getPerdidasDiaSiguiente();
+        return 1/(central.getBeneficiosNetos()-central.getPerdidasDiaSiguiente());
     }
 
 

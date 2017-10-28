@@ -30,6 +30,7 @@ public class Simulador {
             Central centralEstadoFinal = (Central)search.getGoalState();
 
             System.out.printf("Benefits obtained: %.2f \n", centralEstadoFinal.getBeneficiosNetos());
+            System.out.printf("Total loses: %.2f \n", centralEstadoFinal.getPerdidasDiaSiguiente());
             System.out.printf("Total time: %d ms\n", after - before);
         } catch (Exception e) {
             e.printStackTrace();
