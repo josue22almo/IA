@@ -93,10 +93,10 @@ public class Central {
             for(int i = 0; i<peticiones.size(); ++i){
                 double actual;
                 int dias = (int)peticiones.get(i);
-                if(dias == 0) actual = 1000*102;
-                else actual = 1000*Math.pow(2,dias);
+                if(dias == 0) actual = 1000*1.02;
+                else actual = 1000*((100-Math.pow(2,dias))/100);
 
-                double nuevo = 1000*Math.pow(2,dias+1);
+                double nuevo = 1000*((100-Math.pow(2,dias+1))/100);
                 perdidas += actual-nuevo;
             }
         }
