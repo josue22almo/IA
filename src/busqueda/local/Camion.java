@@ -4,7 +4,7 @@ import IA.Gasolina.Distribucion;
 import IA.Gasolina.Gasolinera;
 
 
-public class Camion{
+public class Camion {
     private int viajes;
     private int tanques;
     private double distanciaDisponible;
@@ -28,7 +28,7 @@ public class Camion{
         peticionesAtendidas = 0;
     }
 
-    public Camion(Camion c){
+    public Camion(Camion c) {
         viajes = c.getViajes();
         tanques = c.getTanques();
         distanciaDisponible = c.getDistanciaDisponible();
@@ -42,63 +42,63 @@ public class Camion{
 
     }
 
-    public void volverAlCentroDeDistribucion(){
-        if(viajes == 0){
+    public void volverAlCentroDeDistribucion() {
+        if (viajes == 0) {
             System.out.printf("Alerta!");
         }
-        viajes = viajes-1;
+        viajes = viajes - 1;
         tanques = 2;
         double dist = calcularDistancia(coordsCentreX, coordsCentreY);
         gastos += 2 * dist;
-        distanciaDisponible -=  dist;
+        distanciaDisponible -= dist;
         this.coordX = this.coordsCentreX;
         this.coordY = this.coordsCentreY;
 
     }
 
-    public double calcularDistancia(int destX, int destY){
-        return Math.sqrt(Math.pow(coordX-destX, 2) + Math.pow(coordY-destY, 2));
+    public double calcularDistancia(int destX, int destY) {
+        return Math.sqrt(Math.pow(coordX - destX, 2) + Math.pow(coordY - destY, 2));
     }
 
-    public void atenderPeticion(Gasolinera gasolinera, int numPet){
+    public void atenderPeticion(Gasolinera gasolinera, int numPet) {
         double percent;
         ++peticionesAtendidas;
         int dias = gasolinera.getPeticiones().get(numPet);
-        if(dias == 0) percent = 102;
+        if (dias == 0) percent = 102;
         else percent = 100 - Math.pow(2, dias);
-        ingresos += GANANCIAPORTANQUE*percent/100;
+        ingresos += GANANCIAPORTANQUE * percent / 100;
         double distRecorrida = calcularDistancia(gasolinera.getCoordX(), gasolinera.getCoordY());
-        gastos += PRECIOKM*distRecorrida;
+        gastos += PRECIOKM * distRecorrida;
         distanciaDisponible -= distRecorrida;
         tanques--;
         setCoordsFromGasolinera(gasolinera);
     }
 
-    public void atenderMaxPeticiones(Gasolinera gasolinera){
-        int i = gasolinera.getPeticiones().size()-1;
-        while(tanques > 0 && i >= 0){
+    public void atenderMaxPeticiones(Gasolinera gasolinera) {
+        int i = gasolinera.getPeticiones().size() - 1;
+        while (tanques > 0 && i >= 0) {
             int diasPeticion = gasolinera.getPeticiones().get(i);
             double percent;
-            if(diasPeticion == 0) percent = 102;
+            if (diasPeticion == 0) percent = 102;
             else percent = 100 - Math.pow(2, diasPeticion);
-            ingresos += GANANCIAPORTANQUE*percent/100;
+            ingresos += GANANCIAPORTANQUE * percent / 100;
             gasolinera.getPeticiones().remove(i);
             --i;
             --tanques;
             ++peticionesAtendidas;
         }
         double distRecorrida = calcularDistancia(gasolinera.getCoordX(), gasolinera.getCoordY());
-        gastos += PRECIOKM*distRecorrida;
+        gastos += PRECIOKM * distRecorrida;
         distanciaDisponible -= distRecorrida;
         setCoordsFromGasolinera(gasolinera);
     }
 
-    public double getBeneficiosNetos(){
+    public double getBeneficiosNetos() {
         return ingresos - gastos;
     }
 
-    public boolean puedoAtenderPeticion(Gasolinera gasolinera){
-        return viajes > 0 && tanques > 0 && 2*calcularDistancia(gasolinera.getCoordX(), gasolinera.getCoordY()) <= distanciaDisponible;
+    public boolean puedoAtenderPeticion(Gasolinera gasolinera) {
+        return viajes > 0 && tanques > 0 && 2 * calcularDistancia(gasolinera.getCoordX(), gasolinera.getCoordY()) <= distanciaDisponible;
     }
 
     public double getIngresos() {
@@ -109,7 +109,7 @@ public class Camion{
         return gastos;
     }
 
-    public boolean estoyEnElCentroDistribucion(){
+    public boolean estoyEnElCentroDistribucion() {
         return coordsCentreX == coordX && coordsCentreY == coordY;
     }
 
@@ -119,8 +119,8 @@ public class Camion{
 
     @Override
     public String toString() {
-        return "origen = (" + String.valueOf(coordsCentreX)+ "," + String.valueOf(coordsCentreY) + ") - actual (" + String.valueOf(coordX)+ "," + String.valueOf(coordY) + ")"
-                + " viajes disponibles " + viajes + " tanques disponibles " + String.valueOf(tanques) +  " peticones atendidas " +
+        return "origen = (" + String.valueOf(coordsCentreX) + "," + String.valueOf(coordsCentreY) + ") - actual (" + String.valueOf(coordX) + "," + String.valueOf(coordY) + ")"
+                + " viajes disponibles " + viajes + " tanques disponibles " + String.valueOf(tanques) + " peticones atendidas " +
                 String.valueOf(peticionesAtendidas) + " ganancias = " + String.valueOf(getBeneficiosNetos()) + " km restantes " +
                 String.valueOf(distanciaDisponible);
     }

@@ -25,7 +25,7 @@ public class Central {
         this.seed = seed;
     }
 
-    public Central(Central central){
+    public Central(Central central) {
         this.gasolineras = central.gasolineras;
         copiarCapiones(central);
         copiarGasolineras(central);
@@ -34,7 +34,7 @@ public class Central {
     private void copiarGasolineras(Central central) {
         gasolineras = new Gasolineras(numGasolineras, seed);
         gasolineras.clear();
-        for (Gasolinera gasolinera : central.gasolineras){
+        for (Gasolinera gasolinera : central.gasolineras) {
             int coordX = gasolinera.getCoordX();
             int coordY = gasolinera.getCoordY();
             ArrayList<Integer> peticiones = new ArrayList<>();
@@ -57,7 +57,7 @@ public class Central {
     }
 
     //desplazamos todos los camiones a alguna gasolinera
-    public void aplicarSolucion2(){
+    public void aplicarSolucion2() {
         aplicarSolucion1();
         int i = 0;
         int numGasolineras = gasolineras.size();
@@ -73,7 +73,7 @@ public class Central {
     }
 
     //desplazamos numCamiones a alguna gasolinera
-    public void aplicarSolucion3(int numCamiones){
+    public void aplicarSolucion3(int numCamiones) {
         aplicarSolucion1();
         for (Camion camion : camiones)
             break;
@@ -88,12 +88,12 @@ public class Central {
 
     public double getMaximosBeneficiosActuales() {
         double maxben = 0;
-        for(Gasolinera gasolinera : gasolineras){
+        for (Gasolinera gasolinera : gasolineras) {
             ArrayList peticiones = gasolinera.getPeticiones();
-            for(int i = 0; i<peticiones.size(); ++i){
-                int dias = (int)peticiones.get(i);
-                if(dias == 0) maxben += 1000*1.02;
-                else maxben += 1000*((100-Math.pow(2,dias))/100);
+            for (int i = 0; i < peticiones.size(); ++i) {
+                int dias = (int) peticiones.get(i);
+                if (dias == 0) maxben += 1000 * 1.02;
+                else maxben += 1000 * ((100 - Math.pow(2, dias)) / 100);
             }
         }
         return maxben;
@@ -101,16 +101,16 @@ public class Central {
 
     public double getPerdidasDiaSiguiente() {
         double perdidas = 0;
-        for(Gasolinera gasolinera : gasolineras){
+        for (Gasolinera gasolinera : gasolineras) {
             ArrayList peticiones = gasolinera.getPeticiones();
-            for(int i = 0; i<peticiones.size(); ++i){
+            for (int i = 0; i < peticiones.size(); ++i) {
                 double actual;
-                int dias = (int)peticiones.get(i);
-                if(dias == 0) actual = 1000*1.02;
-                else actual = 1000*((100-Math.pow(2,dias))/100);
+                int dias = (int) peticiones.get(i);
+                if (dias == 0) actual = 1000 * 1.02;
+                else actual = 1000 * ((100 - Math.pow(2, dias)) / 100);
 
-                double nuevo = 1000*((100-Math.pow(2,dias+1))/100);
-                perdidas += actual-nuevo;
+                double nuevo = 1000 * ((100 - Math.pow(2, dias + 1)) / 100);
+                perdidas += actual - nuevo;
             }
         }
         return perdidas;
@@ -132,11 +132,11 @@ public class Central {
         return gasolineras;
     }
 
-    public ArrayList<Camion> getCamiones(){
+    public ArrayList<Camion> getCamiones() {
         return camiones;
     }
 
-    public void atenderPeticion(int indexCamion, int indexGasolinera, int numPet){
+    public void atenderPeticion(int indexCamion, int indexGasolinera, int numPet) {
         Camion camion = camiones.get(indexCamion);
         Gasolinera gasolinera = gasolineras.get(indexGasolinera);
         camion.atenderPeticion(gasolinera, numPet);
@@ -147,11 +147,11 @@ public class Central {
         camiones.get(indexCamion).volverAlCentroDeDistribucion();
     }
 
-    public Camion getCamion(int index){
+    public Camion getCamion(int index) {
         return camiones.get(index);
     }
 
-    public Gasolinera getGasolinera(int index){
+    public Gasolinera getGasolinera(int index) {
         return gasolineras.get(index);
     }
 

@@ -10,11 +10,10 @@ public class CentralFuncioHeuristica1 implements HeuristicFunction {
     }
 
 
-
     // Ingresos - Gastos totales por estado
     public double getHeuristicValue(Object state) {
-        Central central = (Central)state;
-        return 1/central.getBeneficiosNetos();
+        Central central = (Central) state;
+        return 1 / central.getBeneficiosNetos();
     }
 
 
