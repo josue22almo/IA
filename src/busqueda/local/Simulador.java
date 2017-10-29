@@ -6,6 +6,11 @@ import aima.search.framework.SearchAgent;
 import aima.search.informed.HillClimbingSearch;
 import aima.search.informed.SimulatedAnnealingSearch;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Properties;
+
+
 
 public class Simulador {
 
@@ -21,6 +26,8 @@ public class Simulador {
         Search search = new SimulatedAnnealingSearch(steps, stiter, k, (double)lamb);
         Central central = new Central(ncen, mult, ngas, seed);
         central.aplicarSolucion1();
+        System.out.printf("Maximum benefits possible: %.2f \n", central.getMaximosBeneficiosActuales());
+        System.out.printf("Maximum loses possible: %.2f \n", central.getPerdidasDiaSiguiente());
         Problem problem = new Problem(central, new CentralGeneradorEstats(), new CentralEstatFinal(), new CentralFuncioHeuristica1());
 
         try {
@@ -29,6 +36,8 @@ public class Simulador {
             long after = System.currentTimeMillis();
             Central centralEstadoFinal = (Central)search.getGoalState();
 
+            //printActions(agent.getActions());
+            printInstrumentation(agent.getInstrumentation());
             System.out.printf("Benefits obtained: %.2f \n", centralEstadoFinal.getBeneficiosNetos());
             System.out.printf("Total loses: %.2f \n", centralEstadoFinal.getPerdidasDiaSiguiente());
             System.out.printf("Total time: %d ms\n", after - before);
@@ -37,4 +46,21 @@ public class Simulador {
         }
 
     }
+
+    private static void printInstrumentation(Properties properties) {
+        Iterator keys = properties.keySet().iterator();
+        while (keys.hasNext()) {
+            String key = (String) keys.next();
+            String property = properties.getProperty(key);
+            System.out.println(key + " : " + property);
+        }
+
+    }
+
+   /* private static void printActions(List actions) {
+        for (int i = 0; i < actions.size(); i++) {
+            String action = (String)actions.get(i);
+            System.out.println(action);
+        }
+    }*/
 }

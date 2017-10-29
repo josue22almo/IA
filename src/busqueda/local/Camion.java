@@ -43,10 +43,14 @@ public class Camion{
     }
 
     public void volverAlCentroDeDistribucion(){
-        viajes = --viajes;
+        if(viajes == 0){
+            System.out.printf("Alerta!");
+        }
+        viajes = viajes-1;
         tanques = 2;
-        gastos += 2 * calcularDistancia(coordsCentreX, coordsCentreY);
-        distanciaDisponible -=  calcularDistancia(coordsCentreX, coordsCentreY);
+        double dist = calcularDistancia(coordsCentreX, coordsCentreY);
+        gastos += 2 * dist;
+        distanciaDisponible -=  dist;
         this.coordX = this.coordsCentreX;
         this.coordY = this.coordsCentreY;
 

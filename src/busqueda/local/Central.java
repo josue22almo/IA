@@ -86,6 +86,19 @@ public class Central {
         return beneficioNeto;
     }
 
+    public double getMaximosBeneficiosActuales() {
+        double maxben = 0;
+        for(Gasolinera gasolinera : gasolineras){
+            ArrayList peticiones = gasolinera.getPeticiones();
+            for(int i = 0; i<peticiones.size(); ++i){
+                int dias = (int)peticiones.get(i);
+                if(dias == 0) maxben += 1000*1.02;
+                else maxben += 1000*((100-Math.pow(2,dias))/100);
+            }
+        }
+        return maxben;
+    }
+
     public double getPerdidasDiaSiguiente() {
         double perdidas = 0;
         for(Gasolinera gasolinera : gasolineras){
