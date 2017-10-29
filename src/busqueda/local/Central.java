@@ -6,22 +6,19 @@ import IA.Gasolina.Gasolinera;
 import IA.Gasolina.Gasolineras;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Central {
     private Gasolineras gasolineras;
     private static CentrosDistribucion centrosDistribucion;
     private ArrayList<Camion> camiones;
-    private int numGasolineras;
+    private static int numGasolineras;
     private int seed;
-    private int mult;
 
     public Central(int ncen, int mult, int ngas, int seed) {
         centrosDistribucion = new CentrosDistribucion(ncen, mult, seed);
         gasolineras = new Gasolineras(ngas, seed);
         camiones = new ArrayList<>();
         numGasolineras = ngas;
-        this.mult = mult;
         this.seed = seed;
     }
 
@@ -77,6 +74,13 @@ public class Central {
         aplicarSolucion1();
         for (Camion camion : camiones)
             break;
+    }
+
+    public double getBeneficios() {
+        double benficios = 0;
+        for (Camion camion : camiones)
+            benficios += camion.getBeneficios();
+        return benficios;
     }
 
     public double getBeneficiosNetos() {

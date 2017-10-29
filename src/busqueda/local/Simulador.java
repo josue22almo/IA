@@ -22,12 +22,12 @@ public class Simulador {
         steps = 2000; stiter = 1500; k = 1;
         double lamb = 10;
 
-        //Search search = new HillClimbingSearch();
-        Search search = new SimulatedAnnealingSearch(steps, stiter, k, (double)lamb);
+        Search search = new HillClimbingSearch();
+        //Search search = new SimulatedAnnealingSearch(steps, stiter, k, (double)lamb);
         Central central = new Central(ncen, mult, ngas, seed);
         central.aplicarSolucion1();
-        System.out.printf("Maximum benefits possible: %.2f \n", central.getMaximosBeneficiosActuales());
-        System.out.printf("Maximum loses possible: %.2f \n", central.getPerdidasDiaSiguiente());
+      //  System.out.printf("Maximum benefits possible: %.2f \n", central.getMaximosBeneficiosActuales());
+      //  System.out.printf("Maximum loses possible: %.2f \n", central.getPerdidasDiaSiguiente());
         Problem problem = new Problem(central, new CentralGeneradorEstats(), new CentralEstatFinal(), new CentralFuncioHeuristica1());
 
         try {
@@ -38,7 +38,8 @@ public class Simulador {
 
             //printActions(agent.getActions());
             printInstrumentation(agent.getInstrumentation());
-            System.out.printf("Benefits obtained: %.2f \n", centralEstadoFinal.getBeneficiosNetos());
+            System.out.printf("Beneficios obtenidos: %.2f \n", centralEstadoFinal.getBeneficios());
+            System.out.printf("Beneficios netos obtenidos: %.2f \n", centralEstadoFinal.getBeneficiosNetos());
             System.out.printf("Total loses: %.2f \n", centralEstadoFinal.getPerdidasDiaSiguiente());
             System.out.printf("Total time: %d ms\n", after - before);
         } catch (Exception e) {

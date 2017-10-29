@@ -17,6 +17,7 @@ public class Camion {
     private int peticionesAtendidas;
     private static int PRECIOKM = 2;
     private static int GANANCIAPORTANQUE = 1000;
+    private float posiblesGanancias;
 
     public Camion(Distribucion distribucion) {
         this.coordX = this.coordsCentreX = distribucion.getCoordX();
@@ -24,7 +25,8 @@ public class Camion {
         viajes = 5;
         tanques = 2;
         distanciaDisponible = 640;
-        gastos = ingresos = 0;
+        gastos = ingresos =  0;
+        posiblesGanancias = 0;
         peticionesAtendidas = 0;
     }
 
@@ -39,24 +41,21 @@ public class Camion {
         ingresos = c.getIngresos();
         gastos = c.getGastos();
         peticionesAtendidas = c.getPeticionesAtendidas();
-
+        posiblesGanancias = c.posiblesGanancias;
     }
 
     public void volverAlCentroDeDistribucion() {
-        if (viajes == 0) {
-            System.out.printf("Alerta!");
-        }
         viajes = viajes - 1;
         tanques = 2;
         double dist = calcularDistancia(coordsCentreX, coordsCentreY);
-        gastos += 2 * dist;
+        //gastosVueltaAlCentro += 2 * dist;
         distanciaDisponible -= dist;
         this.coordX = this.coordsCentreX;
         this.coordY = this.coordsCentreY;
-
+        posiblesGanancias = 200;
     }
 
-    public double calcularDistancia(int destX, int destY) {
+    private double calcularDistancia(int destX, int destY) {
         return Math.sqrt(Math.pow(coordX - destX, 2) + Math.pow(coordY - destY, 2));
     }
 
@@ -71,6 +70,7 @@ public class Camion {
         gastos += PRECIOKM * distRecorrida;
         distanciaDisponible -= distRecorrida;
         tanques--;
+        posiblesGanancias = 0;
         setCoordsFromGasolinera(gasolinera);
     }
 
@@ -92,6 +92,11 @@ public class Camion {
         distanciaDisponible -= distRecorrida;
         setCoordsFromGasolinera(gasolinera);
     }
+
+    public double getBeneficios() {
+        return ingresos - gastos + posiblesGanancias;
+    }
+
 
     public double getBeneficiosNetos() {
         return ingresos - gastos;
@@ -121,7 +126,7 @@ public class Camion {
     public String toString() {
         return "origen = (" + String.valueOf(coordsCentreX) + "," + String.valueOf(coordsCentreY) + ") - actual (" + String.valueOf(coordX) + "," + String.valueOf(coordY) + ")"
                 + " viajes disponibles " + viajes + " tanques disponibles " + String.valueOf(tanques) + " peticones atendidas " +
-                String.valueOf(peticionesAtendidas) + " ganancias = " + String.valueOf(getBeneficiosNetos()) + " km restantes " +
+                String.valueOf(peticionesAtendidas) + " ganancias = " + String.valueOf(getBeneficios()) + " km restantes " +
                 String.valueOf(distanciaDisponible);
     }
 

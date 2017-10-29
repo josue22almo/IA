@@ -31,12 +31,12 @@ public class CentralGeneradorEstats implements SuccessorFunction {
                     if (nuevoEstado.camionPuedeAtenderPeticion(camionI, gasolinera)) {
                         nuevoEstado.atenderPeticion(camionI, gasolineraJ, peticionK);
                         double v = FH.getHeuristicValue(nuevoEstado);
-                        String S = "Atender peticion (Camion: " + camionI + ", Gasolinera: " + gasolineraJ + ", Peticion: " + peticionK + ", Dias peticion: " + gasolinera.getPeticiones().get(peticionK) + ", Valor heuristico: " + v + ")";
+                        String S = "Atender peticion (Camion: " + camionI + ", Gasolinera: " + gasolineraJ + ", Peticion: " + peticionK + "Valor heuristico: " + v + ")";
                         sucesores.add(new Successor(S, nuevoEstado));
                     } else if (nuevoEstado.getCamion(camionI).getViajes() > 0) {
                         nuevoEstado.desplazarCamionASuCentroDeDistribucion(camionI);
                         double v = FH.getHeuristicValue(nuevoEstado);
-                        String S = "Volver a centro de distribucion (Camion: " + camionI + ", " + gasolineraJ + ", " + peticionK + ", Valor heuristico: " + v + ")";
+                        String S = "Atender peticion (Camion: " + camionI + ", Gasolinera: " + gasolineraJ + ", Peticion: " + peticionK + "Valor heuristico: " + v + ")";
                         sucesores.add(new Successor(S, nuevoEstado));
                     } else
                         break loopgasolineras;
