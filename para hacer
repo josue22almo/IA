@@ -1,0 +1,11 @@
+Estados iniciales:
+	- Desplazar todos los camiones a alguna gasolinera
+	- Desplazar k camiones a k gasolineras diferentes
+	- Desplazar x camiones a la misma gasolinera. Pueden ser g gasolineras.
+
+Operadores:
+	- Desplazar camion a gasolinera y atender 1/2 peticiones.
+	- Desplazar varios camiones a la misma gasolinera (no es muy bueno porque dejamos de atender otras peticiones de gasolineras posisblemente más cercanas).
+
+Heurísticos:
+	- Ricard se encarga de implementar nuevos heurísticos
