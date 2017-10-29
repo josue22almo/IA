@@ -17,7 +17,7 @@ public class Camion {
     private int peticionesAtendidas;
     private static int PRECIOKM = 2;
     private static int GANANCIAPORTANQUE = 1000;
-    private float posiblesGanancias;
+    private float bonificacionVolverAlCentro;
 
     public Camion(Distribucion distribucion) {
         this.coordX = this.coordsCentreX = distribucion.getCoordX();
@@ -26,7 +26,7 @@ public class Camion {
         tanques = 2;
         distanciaDisponible = 640;
         gastos = ingresos =  0;
-        posiblesGanancias = 0;
+        bonificacionVolverAlCentro = 0;
         peticionesAtendidas = 0;
     }
 
@@ -41,7 +41,7 @@ public class Camion {
         ingresos = c.getIngresos();
         gastos = c.getGastos();
         peticionesAtendidas = c.getPeticionesAtendidas();
-        posiblesGanancias = c.posiblesGanancias;
+        bonificacionVolverAlCentro = c.bonificacionVolverAlCentro;
     }
 
     public void volverAlCentroDeDistribucion() {
@@ -52,7 +52,7 @@ public class Camion {
         distanciaDisponible -= dist;
         this.coordX = this.coordsCentreX;
         this.coordY = this.coordsCentreY;
-        posiblesGanancias = 200;
+        bonificacionVolverAlCentro = 200;
     }
 
     private double calcularDistancia(int destX, int destY) {
@@ -70,7 +70,7 @@ public class Camion {
         gastos += PRECIOKM * distRecorrida;
         distanciaDisponible -= distRecorrida;
         tanques--;
-        posiblesGanancias = 0;
+        bonificacionVolverAlCentro = 0;
         setCoordsFromGasolinera(gasolinera);
     }
 
@@ -94,7 +94,7 @@ public class Camion {
     }
 
     public double getBeneficios() {
-        return ingresos - gastos + posiblesGanancias;
+        return ingresos - gastos + bonificacionVolverAlCentro;
     }
 
 
