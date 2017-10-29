@@ -168,4 +168,26 @@ public class Central {
     public boolean camionPuedeAtenderPeticion(int indexCamion, Gasolinera gasolinera) {
         return camiones.get(indexCamion).puedoAtenderPeticion(gasolinera);
     }
+
+    public double getDistanciaRecorrida() {
+        double distanciaRecorrida = 0.f;
+        for (Camion camion : camiones)
+            distanciaRecorrida += camion.getDistanciaRecorrida();
+        return distanciaRecorrida;
+    }
+
+    public void setCosteKM(int coste){
+        camiones.get(0).setCosteKM(coste);
+    }
+
+    public int getPeticionesAtendidas() {
+        int peticiones = 0;
+        for (Camion camion : camiones)
+            peticiones += camion.getPeticionesAtendidas();
+        return peticiones;
+    }
+
+    public void setDistanciaTotal(int distanciaTotal) {
+        Camion.DISTANCIAINICIAL = distanciaTotal;
+    }
 }

@@ -17,6 +17,7 @@ public class Camion {
     private int peticionesAtendidas;
     private static int PRECIOKM = 2;
     private static int GANANCIAPORTANQUE = 1000;
+    public static int DISTANCIAINICIAL = 640;
     private float bonificacionVolverAlCentro;
 
     public Camion(Distribucion distribucion) {
@@ -24,7 +25,7 @@ public class Camion {
         this.coordY = this.coordsCentreY = distribucion.getCoordY();
         viajes = 5;
         tanques = 2;
-        distanciaDisponible = 640;
+        distanciaDisponible = DISTANCIAINICIAL;
         gastos = ingresos =  0;
         bonificacionVolverAlCentro = 0;
         peticionesAtendidas = 0;
@@ -48,7 +49,6 @@ public class Camion {
         viajes = viajes - 1;
         tanques = 2;
         double dist = calcularDistancia(coordsCentreX, coordsCentreY);
-        //gastosVueltaAlCentro += 2 * dist;
         distanciaDisponible -= dist;
         this.coordX = this.coordsCentreX;
         this.coordY = this.coordsCentreY;
@@ -103,7 +103,7 @@ public class Camion {
     }
 
     public boolean puedoAtenderPeticion(Gasolinera gasolinera) {
-        return viajes > 0 && tanques > 0 && 2 * calcularDistancia(gasolinera.getCoordX(), gasolinera.getCoordY()) <= distanciaDisponible;
+        return viajes > 0 && tanques > 0 && distanciaDisponible - 2*calcularDistancia(gasolinera.getCoordX(), gasolinera.getCoordY()) > 0;
     }
 
     public double getIngresos() {
@@ -127,7 +127,8 @@ public class Camion {
         return "origen = (" + String.valueOf(coordsCentreX) + "," + String.valueOf(coordsCentreY) + ") - actual (" + String.valueOf(coordX) + "," + String.valueOf(coordY) + ")"
                 + " viajes disponibles " + viajes + " tanques disponibles " + String.valueOf(tanques) + " peticones atendidas " +
                 String.valueOf(peticionesAtendidas) + " ganancias = " + String.valueOf(getBeneficios()) + " km restantes " +
-                String.valueOf(distanciaDisponible);
+                String.valueOf(distanciaDisponible) + " distancia recorrida = " + String.valueOf(getDistanciaRecorrida() +
+                " distancia inicial " + String.valueOf(DISTANCIAINICIAL));
     }
 
     public int getTanques() {
@@ -201,5 +202,13 @@ public class Camion {
     public void setCoordsFromGasolinera(Gasolinera gasolinera) {
         coordY = gasolinera.getCoordY();
         coordX = gasolinera.getCoordX();
+    }
+
+    public double getDistanciaRecorrida() {
+        return DISTANCIAINICIAL - distanciaDisponible;
+    }
+
+    public void setCosteKM(int costeKM) {
+        this.PRECIOKM = costeKM;
     }
 }
