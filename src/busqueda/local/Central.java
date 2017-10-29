@@ -6,6 +6,7 @@ import IA.Gasolina.Gasolinera;
 import IA.Gasolina.Gasolineras;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Central {
     private Gasolineras gasolineras;
@@ -72,8 +73,13 @@ public class Central {
     //desplazamos numCamiones a alguna gasolinera
     public void aplicarSolucion3(int numCamiones) {
         aplicarSolucion1();
-        for (Camion camion : camiones)
-            break;
+        int i = camiones.size() - 1;
+        while (i >= 0  && numCamiones >= 0) {
+            int indexG = new Random().nextInt(gasolineras.size()-1);
+            Gasolinera gasolinera = gasolineras.get(indexG);
+            camiones.get(i).atenderMaxPeticiones(gasolinera);
+            --i; --numCamiones;
+        }
     }
 
     public double getBeneficios() {
