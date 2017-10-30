@@ -8,7 +8,7 @@ import aima.search.informed.SimulatedAnnealingSearch;
 import busqueda.local.Central;
 import busqueda.local.CentralEstatFinal;
 import busqueda.local.CentralFuncioHeuristica1;
-import busqueda.local.CentralGeneradorEstats;
+import busqueda.local.CentralGeneradorEstatsSA;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -34,9 +34,9 @@ public class Experimentos {
             int numCamiones = new Random().nextInt(ncen*mult);
             c3.aplicarSolucion3(numCamiones);
 
-            Problem problem1 = new Problem(c1, new CentralGeneradorEstats(), new CentralEstatFinal(), new CentralFuncioHeuristica1());
-            Problem problem2 = new Problem(c2, new CentralGeneradorEstats(), new CentralEstatFinal(), new CentralFuncioHeuristica1());
-            Problem problem3 = new Problem(c3, new CentralGeneradorEstats(), new CentralEstatFinal(), new CentralFuncioHeuristica1());
+            Problem problem1 = new Problem(c1, new CentralGeneradorEstatsSA(), new CentralEstatFinal(), new CentralFuncioHeuristica1());
+            Problem problem2 = new Problem(c2, new CentralGeneradorEstatsSA(), new CentralEstatFinal(), new CentralFuncioHeuristica1());
+            Problem problem3 = new Problem(c3, new CentralGeneradorEstatsSA(), new CentralEstatFinal(), new CentralFuncioHeuristica1());
 
             System.out.println("#beneficios con bonificacion        # beneficios netos       #tiempo" );
             simular(problem1, search);
@@ -54,7 +54,7 @@ public class Experimentos {
                 int k = new Random().nextInt(10000);
                 double lamb = Double.valueOf(new Random().nextInt(100000));
                 Search search = new SimulatedAnnealingSearch(steps, stiter, k, lamb);
-                Problem problem = new Problem(central, new CentralGeneradorEstats(), new CentralEstatFinal(), new CentralFuncioHeuristica1());
+                Problem problem = new Problem(central, new CentralGeneradorEstatsSA(), new CentralEstatFinal(), new CentralFuncioHeuristica1());
 
                 simularSA(problem, search, steps, stiter, k, lamb);
                 --t;
@@ -73,7 +73,7 @@ public class Experimentos {
             while (times >= 0){
                 Central c = new Central(nc, mlt, ng, sd);
                 c.aplicarSolucion1();
-                Problem problem = new Problem(c, new CentralGeneradorEstats(), new CentralEstatFinal(), new CentralFuncioHeuristica1());
+                Problem problem = new Problem(c, new CentralGeneradorEstatsSA(), new CentralEstatFinal(), new CentralFuncioHeuristica1());
                 System.out.printf("%d       %d          ", nc, ng);
                 printExperimento4(problem, searchHC);
                 System.out.printf("%d       %d          ", nc, ng);
@@ -85,20 +85,20 @@ public class Experimentos {
             int ncen = 10, mult = 1, ngas = 100, seed = 1;
             Central central = new Central(ncen, mult, ngas, seed);
             central.aplicarSolucion1();
-            Problem problem = new Problem(central, new CentralGeneradorEstats(), new CentralEstatFinal(), new CentralFuncioHeuristica1());
+            Problem problem = new Problem(central, new CentralGeneradorEstatsSA(), new CentralEstatFinal(), new CentralFuncioHeuristica1());
             Search search = new HillClimbingSearch();
             System.out.println("#beneficios con bonificacion        # beneficios netos       #km recorridos" );
             experimento5(problem, search);
             ncen = 5;
             central = new Central(ncen, mult, ngas, seed);
             central.aplicarSolucion1();
-            problem = new Problem(central, new CentralGeneradorEstats(), new CentralEstatFinal(), new CentralFuncioHeuristica1());
+            problem = new Problem(central, new CentralGeneradorEstatsSA(), new CentralEstatFinal(), new CentralFuncioHeuristica1());
             experimento5(problem, search);
         } else if (numExperimento == 6){
             int ncen = 10, mult = 1, ngas = 100, seed = 1;
             Central central = new Central(ncen, mult, ngas, seed);
             central.aplicarSolucion1();
-            Problem problem = new Problem(central, new CentralGeneradorEstats(), new CentralEstatFinal(), new CentralFuncioHeuristica1());
+            Problem problem = new Problem(central, new CentralGeneradorEstatsSA(), new CentralEstatFinal(), new CentralFuncioHeuristica1());
             Search search = new HillClimbingSearch();
             int times = 15, costeKM = 2;
             System.out.println("#coste del km  #peticiones atendidas" );
@@ -113,7 +113,7 @@ public class Experimentos {
             int ncen = 10, mult = 1, ngas = 100, seed = 1;
             Central central = new Central(ncen, mult, ngas, seed);
             central.aplicarSolucion1();
-            Problem problem = new Problem(central, new CentralGeneradorEstats(), new CentralEstatFinal(), new CentralFuncioHeuristica1());
+            Problem problem = new Problem(central, new CentralGeneradorEstatsSA(), new CentralEstatFinal(), new CentralFuncioHeuristica1());
             Search search = new HillClimbingSearch();
             int distanciaInicail = 600;
             System.out.println("#distancia inicial #beneficio" );
@@ -152,7 +152,7 @@ public class Experimentos {
         try {
             SearchAgent agent = new SearchAgent(problem, search);
             Central centralEstadoFinal = (Central)search.getGoalState();
-            System.out.printf("%.2f                            ", centralEstadoFinal.getBeneficios());
+            System.out.printf("%.2f                            ", centralEstadoFinal.getBeneficiosNetos());
             System.out.printf("%.2f                  ", centralEstadoFinal.getBeneficiosNetos());
             System.out.printf("%.2f\n", centralEstadoFinal.getDistanciaRecorrida());
         } catch (Exception e) {
@@ -166,7 +166,7 @@ public class Experimentos {
             SearchAgent agent = new SearchAgent(problem, search);
             long after = System.currentTimeMillis();
             Central centralEstadoFinal = (Central)search.getGoalState();
-            System.out.printf("%.2f                            ", centralEstadoFinal.getBeneficios());
+            System.out.printf("%.2f                            ", centralEstadoFinal.getBeneficiosNetos());
             System.out.printf("%.2f                  ", centralEstadoFinal.getBeneficiosNetos());
             System.out.printf("%d       \n", after - before);
         } catch (Exception e) {
@@ -191,7 +191,7 @@ public class Experimentos {
             SearchAgent agent = new SearchAgent(problem, search);
             long after = System.currentTimeMillis();
             Central centralEstadoFinal = (Central)search.getGoalState();
-            System.out.printf("%.2f                            ", centralEstadoFinal.getBeneficios());
+            System.out.printf("%.2f                            ", centralEstadoFinal.getBeneficiosNetos());
             System.out.printf("%.2f                  ", centralEstadoFinal.getBeneficiosNetos());
             System.out.printf("%d       %d      %d     %d    %.2f\n", after - before, steps, filter, k, lamb);
         } catch (Exception e) {

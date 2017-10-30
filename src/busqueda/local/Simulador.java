@@ -3,11 +3,9 @@ package busqueda.local;
 import aima.search.framework.Problem;
 import aima.search.framework.Search;
 import aima.search.framework.SearchAgent;
-import aima.search.informed.HillClimbingSearch;
 import aima.search.informed.SimulatedAnnealingSearch;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.Properties;
 
 
@@ -22,13 +20,13 @@ public class Simulador {
         steps = 2000; stiter = 1500; k = 1;
         double lamb = 10;
 
-        Search search = new HillClimbingSearch();
-        //Search search = new SimulatedAnnealingSearch(steps, stiter, k, (double)lamb);
+        //Search search = new HillClimbingSearch();
+        Search search = new SimulatedAnnealingSearch(steps, stiter, k, (double)lamb);
         Central central = new Central(ncen, mult, ngas, seed);
         central.aplicarSolucion1();
         System.out.printf("Maximum benefits possible: %.2f \n", central.getMaximosBeneficiosActuales());
         System.out.printf("Maximum loses possible: %.2f \n", central.getPerdidasDiaSiguiente());
-        Problem problem = new Problem(central, new CentralGeneradorEstats(), new CentralEstatFinal(), new CentralFuncioHeuristica1());
+        Problem problem = new Problem(central, new CentralGeneradorEstatsSA(), new CentralEstatFinal(), new CentralFuncioHeuristica1());
 
         try {
             long before = System.currentTimeMillis();
@@ -38,8 +36,8 @@ public class Simulador {
 
             //printActions(agent.getActions());
             printInstrumentation(agent.getInstrumentation());
-            System.out.printf("Beneficios obtenidos: %.2f \n", centralEstadoFinal.getBeneficios());
-            System.out.printf("Beneficios netos obtenidos: %.2f \n", centralEstadoFinal.getBeneficiosNetos());
+            System.out.printf("Beneficios obtenidos: %.2f \n", centralEstadoFinal.getBeneficiosNetos());
+            System.out.printf("Beneficios netos obtenidos: %.2f \n", centralEstadoFinal.getBeneficiosNetosNetos());
             System.out.printf("Total loses: %.2f \n", centralEstadoFinal.getPerdidasDiaSiguiente());
             System.out.printf("Total time: %d ms\n", after - before);
         } catch (Exception e) {

@@ -12,7 +12,7 @@ public class CentralFuncioHeuristica4 implements HeuristicFunction {
     //Beneficios - perdidas dia siguiente(Horrible)
     public double getHeuristicValue(Object state) {
         Central central = (Central) state;
-        return 1 / (central.getBeneficios() - central.getPerdidasDiaSiguiente());
+        return 1 / (central.getBeneficiosNetos() - central.getPerdidasDiaSiguiente());
     }
 
 

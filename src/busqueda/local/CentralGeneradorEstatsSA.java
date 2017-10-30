@@ -7,10 +7,10 @@ import IA.Gasolina.Gasolinera;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CentralGeneradorEstats implements SuccessorFunction {
+public class CentralGeneradorEstatsSA implements SuccessorFunction {
 
 
-    public CentralGeneradorEstats() {
+    public CentralGeneradorEstatsSA() {
     }
 
     @Override

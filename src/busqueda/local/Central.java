@@ -82,19 +82,13 @@ public class Central {
         }
     }
 
-    public double getBeneficios() {
+    public double getBeneficiosNetos() {
         double benficios = 0;
         for (Camion camion : camiones)
-            benficios += camion.getBeneficios();
+            benficios += camion.getBeneficiosNetos();
         return benficios;
     }
 
-    public double getBeneficiosNetos() {
-        double beneficioNeto = 0;
-        for (Camion camion : camiones)
-            beneficioNeto += camion.getBeneficiosNetos();
-        return beneficioNeto;
-    }
 
     public double getMaximosBeneficiosActuales() {
         double maxben = 0;
