@@ -184,4 +184,46 @@ public class Central {
     public void setDistanciaTotal(int distanciaTotal) {
         Camion.DISTANCIAINICIAL = distanciaTotal;
     }
+
+    public boolean camionPuedeViajear(int camionI, Gasolinera gasolinera) {
+        return camiones.get(camionI).puedoAtenderPeticion(gasolinera) && gasolinera.getPeticiones().size() > 0;
+    }
+
+    public void realizarViaje(int camionI, int k) {
+        Camion camion = camiones.get(camionI);
+        camion.atenderMaxPeticiones(gasolineras.get(k));
+        camion.volverAlCentroDeDistribucion();
+    }
+
+    public ArrayList<Tuple<Integer,Integer>> getPosiblesViajesCamion(int camionI) {
+        Camion camion = camiones.get(camionI);
+        ArrayList<Tuple<Integer,Integer>> viajes = new ArrayList<>();
+        for (int i = 0; i < numGasolineras; ++i){
+            Gasolinera gasolinera1 = gasolineras.get(i);
+            for (int j = 0; j < numGasolineras && gasolinera1.getPeticiones().size() > 0; ++j){
+                Gasolinera gasolinera2 = gasolineras.get(j);
+                if (i != j && camion.posibleViaje(gasolinera1, gasolinera2))
+                    viajes.add(new Tuple(i,j));
+            }
+        }
+        return viajes;
+    }
+
+    public void realizarViaje(int camion, Tuple<Integer, Integer> viaje){
+        camiones.get(camion).atenderPeticion(gasolineras.get(viaje.x), mejorPeticion(viaje.x));
+        camiones.get(camion).atenderPeticion(gasolineras.get(viaje.y), mejorPeticion(viaje.y));
+        camiones.get(camion).volverAlCentroDeDistribucion();
+    }
+
+    private int mejorPeticion(Integer x) {
+        int index = -1;
+        int min = 100;
+        for (int i = 0; i < gasolineras.get(x).getPeticiones().size(); ++i){
+            if (gasolineras.get(x).getPeticiones().get(i) < min){
+                min = gasolineras.get(x).getPeticiones().get(i);
+                index = i;
+            }
+        }
+        return index;
+    }
 }

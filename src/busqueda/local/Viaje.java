@@ -19,7 +19,6 @@ public class Viaje {
         this.ingresoAcumulado = 0;
         this.gastoAcumulado = 0;
         this.distanciaRecorrida = 0;
-
     }
 
     public Viaje(ArrayList<Gasolinera> recorrido, ArrayList<Integer> pedidoAtendido, double ingresoAcumulado, double gastoAcumulado, double distanciaRecorrida) {
@@ -28,6 +27,24 @@ public class Viaje {
         this.ingresoAcumulado = ingresoAcumulado;
         this.gastoAcumulado = gastoAcumulado;
         this.distanciaRecorrida = distanciaRecorrida;
+    }
+    
+    public Viaje (Viaje viaje){
+        copiarRecorrido(recorrido);
+        copiarPedidos(pedidoAtendido);
+        this.ingresoAcumulado = viaje.ingresoAcumulado;
+        this.gastoAcumulado = viaje.gastoAcumulado;
+        this.distanciaRecorrida = viaje.distanciaRecorrida;
+    }
+
+    private void copiarPedidos(ArrayList<Integer> pedidoAtendido) {
+        for (Integer pedido : pedidoAtendido)
+            this.pedidoAtendido.add(pedido);
+    }
+
+    private void copiarRecorrido(ArrayList<Gasolinera> recorrido) {
+        for (Gasolinera gasolinera : recorrido)
+            this.recorrido.add(new Gasolinera(gasolinera.getCoordX(), gasolinera.getCoordY(), (ArrayList<Integer>) gasolinera.getPeticiones().clone()));
     }
 
     public ArrayList<Gasolinera> getRecorrido() {

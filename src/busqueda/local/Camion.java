@@ -43,6 +43,12 @@ public class Camion {
         ingresos = c.getIngresos();
         gastos = c.getGastos();
         peticionesAtendidas = c.getPeticionesAtendidas();
+        copiarItinerarios(c);
+    }
+
+    private void copiarItinerarios(Camion c) {
+        for (Viaje viaje : c.itinerario)
+            itinerario.add(new Viaje(viaje));
     }
 
     public void volverAlCentroDeDistribucion() {
@@ -63,17 +69,20 @@ public class Camion {
     }
 
     public void atenderPeticion(Gasolinera gasolinera, int numPet) {
-        double percent;
-        ++peticionesAtendidas;
-        int dias = gasolinera.getPeticiones().get(numPet);
-        if (dias == 0) percent = 102;
-        else percent = 100 - Math.pow(2, dias);
-        ingresos += GANANCIAPORTANQUE * percent / 100;
-        double distRecorrida = calcularDistancia(gasolinera.getCoordX(), gasolinera.getCoordY());
-        gastos += PRECIOKM * distRecorrida;
-        distanciaDisponible -= distRecorrida;
-        tanques--;
-        setCoordsFromGasolinera(gasolinera);
+        if (numPet >= 0){
+            double percent;
+            ++peticionesAtendidas;
+            int dias = gasolinera.getPeticiones().get(numPet);
+            if (dias == 0) percent = 102;
+            else percent = 100 - Math.pow(2, dias);
+            ingresos += GANANCIAPORTANQUE * percent / 100;
+            double distRecorrida = calcularDistancia(gasolinera.getCoordX(), gasolinera.getCoordY());
+            gastos += PRECIOKM * distRecorrida;
+            distanciaDisponible -= distRecorrida;
+            tanques--;
+            setCoordsFromGasolinera(gasolinera);
+            gasolinera.getPeticiones().remove(numPet);
+        }
     }
 
     public void atenderMaxPeticiones(Gasolinera gasolinera) {
@@ -96,11 +105,6 @@ public class Camion {
     }
 
     public double getBeneficiosNetos() {
-        return ingresos - gastos;
-    }
-
-
-    public double getBeneficiosNetosNetos() {
         return ingresos - gastos;
     }
 
@@ -165,46 +169,6 @@ public class Camion {
         return peticionesAtendidas;
     }
 
-    public void setViajes(int viajes) {
-        this.viajes = viajes;
-    }
-
-    public void setTanques(int tanques) {
-        this.tanques = tanques;
-    }
-
-    public void setDistanciaDisponible(double distanciaDisponible) {
-        this.distanciaDisponible = distanciaDisponible;
-    }
-
-    public void setCoordsCentreX(int coordsCentreX) {
-        this.coordsCentreX = coordsCentreX;
-    }
-
-    public void setCoordsCentreY(int coordsCentreY) {
-        this.coordsCentreY = coordsCentreY;
-    }
-
-    public void setCoordX(int coordX) {
-        this.coordX = coordX;
-    }
-
-    public void setCoordY(int coordY) {
-        this.coordY = coordY;
-    }
-
-    public void setIngresos(double ingresos) {
-        this.ingresos = ingresos;
-    }
-
-    public void setGastos(double gastos) {
-        this.gastos = gastos;
-    }
-
-    public void setPeticionesAtendidas(int peticionesAtendidas) {
-        this.peticionesAtendidas = peticionesAtendidas;
-    }
-
     public void setCoordsFromGasolinera(Gasolinera gasolinera) {
         coordY = gasolinera.getCoordY();
         coordX = gasolinera.getCoordX();
@@ -216,5 +180,11 @@ public class Camion {
 
     public void setCosteKM(int costeKM) {
         this.PRECIOKM = costeKM;
+    }
+
+    public boolean posibleViaje(Gasolinera gasolinera1, Gasolinera gasolinera2) {
+        double d = calcularDistancia(gasolinera1.getCoordX(), gasolinera1.getCoordY()) + calcularDistancia(gasolinera2.getCoordX(), gasolinera2.getCoordY())
+                + calcularRetorno(gasolinera1.getCoordX(), gasolinera2.getCoordY());
+        return d <= distanciaDisponible && viajes > 0 && gasolinera1.getPeticiones().size() > 0 && gasolinera2.getPeticiones().size() > 0;
     }
 }
