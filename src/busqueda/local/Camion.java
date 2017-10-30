@@ -3,8 +3,10 @@ package busqueda.local;
 import IA.Gasolina.Distribucion;
 import IA.Gasolina.Gasolinera;
 
+import java.util.ArrayList;
 
 public class Camion {
+    private ArrayList<Viaje> itinerario;
     private int viajes;
     private int tanques;
     private double distanciaDisponible;
@@ -23,6 +25,7 @@ public class Camion {
     public Camion(Distribucion distribucion) {
         this.coordX = this.coordsCentreX = distribucion.getCoordX();
         this.coordY = this.coordsCentreY = distribucion.getCoordY();
+        this.itinerario = new ArrayList<>();
         viajes = 5;
         tanques = 2;
         distanciaDisponible = DISTANCIAINICIAL;
