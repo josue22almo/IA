@@ -141,10 +141,11 @@ public class Central {
     }
 
     public void atenderPeticion(int indexCamion, int indexGasolinera, int numPet) {
-        Camion camion = camiones.get(indexCamion);
-        Gasolinera gasolinera = gasolineras.get(indexGasolinera);
-        camion.atenderPeticion(gasolinera, numPet);
-        gasolinera.getPeticiones().remove(numPet);
+        if (numPet >= 0 && numPet < gasolineras.get(indexGasolinera).getPeticiones().size()){
+            Camion camion = camiones.get(indexCamion);
+            Gasolinera gasolinera = gasolineras.get(indexGasolinera);
+            camion.atenderPeticion(gasolinera, numPet);
+        }
     }
 
     public void desplazarCamionASuCentroDeDistribucion(int indexCamion) {
