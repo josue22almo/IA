@@ -36,8 +36,8 @@ public class Simulador {
 
             //printActions(agent.getActions());
             printInstrumentation(agent.getInstrumentation());
-            System.out.printf("Beneficios obtenidos: %.2f \n", centralEstadoFinal.getBeneficios());
-            System.out.printf("Beneficios netos obtenidos: %.2f \n", centralEstadoFinal.getBeneficiosNetos());
+            System.out.printf("Beneficios obtenidos: %.2f \n", centralEstadoFinal.getBeneficiosNetos());
+            System.out.printf("Beneficios netos obtenidos: %.2f \n", centralEstadoFinal.getBeneficiosNetosNetos());
             System.out.printf("Total loses: %.2f \n", centralEstadoFinal.getPerdidasDiaSiguiente());
             System.out.printf("Total time: %d ms\n", after - before);
         } catch (Exception e) {

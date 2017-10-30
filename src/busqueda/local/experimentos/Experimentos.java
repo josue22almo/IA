@@ -152,7 +152,7 @@ public class Experimentos {
         try {
             SearchAgent agent = new SearchAgent(problem, search);
             Central centralEstadoFinal = (Central)search.getGoalState();
-            System.out.printf("%.2f                            ", centralEstadoFinal.getBeneficios());
+            System.out.printf("%.2f                            ", centralEstadoFinal.getBeneficiosNetos());
             System.out.printf("%.2f                  ", centralEstadoFinal.getBeneficiosNetos());
             System.out.printf("%.2f\n", centralEstadoFinal.getDistanciaRecorrida());
         } catch (Exception e) {
@@ -166,7 +166,7 @@ public class Experimentos {
             SearchAgent agent = new SearchAgent(problem, search);
             long after = System.currentTimeMillis();
             Central centralEstadoFinal = (Central)search.getGoalState();
-            System.out.printf("%.2f                            ", centralEstadoFinal.getBeneficios());
+            System.out.printf("%.2f                            ", centralEstadoFinal.getBeneficiosNetos());
             System.out.printf("%.2f                  ", centralEstadoFinal.getBeneficiosNetos());
             System.out.printf("%d       \n", after - before);
         } catch (Exception e) {
@@ -191,7 +191,7 @@ public class Experimentos {
             SearchAgent agent = new SearchAgent(problem, search);
             long after = System.currentTimeMillis();
             Central centralEstadoFinal = (Central)search.getGoalState();
-            System.out.printf("%.2f                            ", centralEstadoFinal.getBeneficios());
+            System.out.printf("%.2f                            ", centralEstadoFinal.getBeneficiosNetos());
             System.out.printf("%.2f                  ", centralEstadoFinal.getBeneficiosNetos());
             System.out.printf("%d       %d      %d     %d    %.2f\n", after - before, steps, filter, k, lamb);
         } catch (Exception e) {
