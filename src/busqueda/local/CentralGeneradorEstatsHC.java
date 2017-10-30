@@ -1,7 +1,5 @@
 package busqueda.local;
 
-import IA.Gasolina.Gasolinera;
-import IA.Gasolina.Gasolineras;
 import aima.search.framework.Successor;
 import aima.search.framework.SuccessorFunction;
 
