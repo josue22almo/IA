@@ -26,8 +26,8 @@ public class Simulador {
         //Search search = new SimulatedAnnealingSearch(steps, stiter, k, (double)lamb);
         Central central = new Central(ncen, mult, ngas, seed);
         central.aplicarSolucion1();
-      //  System.out.printf("Maximum benefits possible: %.2f \n", central.getMaximosBeneficiosActuales());
-      //  System.out.printf("Maximum loses possible: %.2f \n", central.getPerdidasDiaSiguiente());
+        System.out.printf("Maximum benefits possible: %.2f \n", central.getMaximosBeneficiosActuales());
+        System.out.printf("Maximum loses possible: %.2f \n", central.getPerdidasDiaSiguiente());
         Problem problem = new Problem(central, new CentralGeneradorEstats(), new CentralEstatFinal(), new CentralFuncioHeuristica1());
 
         try {

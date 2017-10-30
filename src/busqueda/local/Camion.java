@@ -26,7 +26,7 @@ public class Camion {
         viajes = 5;
         tanques = 2;
         distanciaDisponible = DISTANCIAINICIAL;
-        gastos = ingresos =  0;
+        gastos = ingresos = 0;
         bonificacionVolverAlCentro = 0;
         peticionesAtendidas = 0;
     }
@@ -57,6 +57,10 @@ public class Camion {
 
     private double calcularDistancia(int destX, int destY) {
         return Math.sqrt(Math.pow(coordX - destX, 2) + Math.pow(coordY - destY, 2));
+    }
+
+    private double calcularRetorno(int destX, int destY) {
+        return Math.sqrt(Math.pow(coordsCentreX - destX, 2) + Math.pow(coordsCentreY - destY, 2));
     }
 
     public void atenderPeticion(Gasolinera gasolinera, int numPet) {
@@ -103,7 +107,11 @@ public class Camion {
     }
 
     public boolean puedoAtenderPeticion(Gasolinera gasolinera) {
-        return viajes > 0 && tanques > 0 && distanciaDisponible - 2*calcularDistancia(gasolinera.getCoordX(), gasolinera.getCoordY()) > 0;
+        boolean puedovoler;
+        if (estoyEnElCentroDistribucion())
+            puedovoler = distanciaDisponible - 2 * calcularDistancia(gasolinera.getCoordX(), gasolinera.getCoordY()) >= 0;
+        else puedovoler = distanciaDisponible - (calcularDistancia(gasolinera.getCoordX(), gasolinera.getCoordY()) + calcularRetorno(gasolinera.getCoordX(),gasolinera.getCoordY())) >= 0;
+        return viajes > 0 && tanques > 0 && puedovoler;
     }
 
     public double getIngresos() {
