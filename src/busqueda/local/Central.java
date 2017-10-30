@@ -88,7 +88,7 @@ public class Central {
             benficios += camion.getBeneficiosNetos();
         return benficios;
     }
-    
+
 
     public double getMaximosBeneficiosActuales() {
         double maxben = 0;

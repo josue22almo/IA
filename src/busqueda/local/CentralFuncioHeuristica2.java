@@ -16,6 +16,4 @@ public class CentralFuncioHeuristica2 implements HeuristicFunction {
         return central.getTotalGastos() / central.getTotalIngresos();
 
     }
-
-
 }
