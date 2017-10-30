@@ -6,6 +6,7 @@ import IA.Gasolina.Gasolinera;
 import java.util.ArrayList;
 
 public class Camion {
+
     private ArrayList<Viaje> itinerario;
     private int viajes;
     private int tanques;
@@ -20,6 +21,8 @@ public class Camion {
     private static int PRECIOKM = 2;
     private static int GANANCIAPORTANQUE = 1000;
     public static int DISTANCIAINICIAL = 640;
+
+
 
     public Camion(Distribucion distribucion) {
         this.coordX = this.coordsCentreX = distribucion.getCoordX();
@@ -73,6 +76,7 @@ public class Camion {
         gastos += PRECIOKM * distRecorrida;
         distanciaDisponible -= distRecorrida;
         tanques--;
+        gasolinera.getPeticiones().remove(numPet);
         setCoordsFromGasolinera(gasolinera);
     }
 

@@ -19,8 +19,26 @@ public class Central {
         centrosDistribucion = new CentrosDistribucion(ncen, mult, seed);
         gasolineras = new Gasolineras(ngas, seed);
         camiones = new ArrayList<>();
+        colocarCamiones();
         numGasolineras = ngas;
         this.seed = seed;
+
+        for(int camionI = 0; camionI < camiones.size(); ++camionI){
+            generarItinerario(camiones.get(camionI), seed);
+        }
+    }
+
+    private void generarItinerario(Camion camion, int seed) {
+        Random myRandom = new Random();
+        myRandom.setSeed(seed);
+        for(int i = 0; i < 4; ++i){
+            Gasolinera gasol = gasolineras.get(myRandom.nextInt(99));
+            Integer numPet = gasol.getPeticiones().get(myRandom.nextInt(gasol.getPeticiones().size()-1));
+
+
+
+
+        }
     }
 
     public Central(Central central) {
@@ -48,39 +66,19 @@ public class Central {
             camiones.add(new Camion(camion));
     }
 
-    public void aplicarSolucion1() {
+
+
+    private void colocarCamiones() {
         for (Distribucion distribucion : centrosDistribucion) {
             camiones.add(new Camion(distribucion));
         }
     }
 
-    //desplazamos todos los camiones a alguna gasolinera
-    public void aplicarSolucion2() {
-        aplicarSolucion1();
-        int i = 0;
-        int numGasolineras = gasolineras.size();
-        for (Camion camion : camiones) {
-            Gasolinera gasolinera = gasolineras.get(i % numGasolineras);
-            camion.atenderMaxPeticiones(gasolinera);
-            ++i;
-        }
-    }
 
     public static CentrosDistribucion getCentrosDistribucion() {
         return centrosDistribucion;
     }
 
-    //desplazamos numCamiones a alguna gasolinera
-    public void aplicarSolucion3(int numCamiones) {
-        aplicarSolucion1();
-        int i = camiones.size() - 1;
-        while (i >= 0  && numCamiones >= 0) {
-            int indexG = new Random().nextInt(gasolineras.size()-1);
-            Gasolinera gasolinera = gasolineras.get(indexG);
-            camiones.get(i).atenderMaxPeticiones(gasolinera);
-            --i; --numCamiones;
-        }
-    }
 
     public double getBeneficiosNetos() {
         double benficios = 0;
@@ -119,6 +117,9 @@ public class Central {
         }
         return perdidas;
     }
+
+
+
 
     public double getTotalIngresos() {
         double ingresosTotales = 0;

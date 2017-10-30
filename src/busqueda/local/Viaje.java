@@ -6,8 +6,7 @@ import java.util.ArrayList;
 
 public class Viaje {
 
-    private ArrayList<Gasolinera> recorrido;
-    private ArrayList<Integer> pedidoAtendido;
+    private ArrayList<PeticionAtendida> recorrido;
     private double ingresoAcumulado;
     private double gastoAcumulado;
     private double distanciaRecorrida;
@@ -15,28 +14,23 @@ public class Viaje {
 
     public Viaje() {
         this.recorrido = new ArrayList<>();
-        this.pedidoAtendido = new ArrayList<Integer>();
         this.ingresoAcumulado = 0;
         this.gastoAcumulado = 0;
         this.distanciaRecorrida = 0;
 
     }
 
-    public Viaje(ArrayList<Gasolinera> recorrido, ArrayList<Integer> pedidoAtendido, double ingresoAcumulado, double gastoAcumulado, double distanciaRecorrida) {
+    public Viaje(ArrayList<PeticionAtendida> recorrido, double ingresoAcumulado, double gastoAcumulado, double distanciaRecorrida) {
         this.recorrido = recorrido;
-        this.pedidoAtendido = pedidoAtendido;
         this.ingresoAcumulado = ingresoAcumulado;
         this.gastoAcumulado = gastoAcumulado;
         this.distanciaRecorrida = distanciaRecorrida;
     }
 
-    public ArrayList<Gasolinera> getRecorrido() {
+    public ArrayList<PeticionAtendida> getRecorrido() {
         return recorrido;
     }
 
-    public ArrayList<Integer> getPedidoAtendido() {
-        return pedidoAtendido;
-    }
 
     public double getIngresoAcumulado() {
         return ingresoAcumulado;
@@ -50,12 +44,8 @@ public class Viaje {
         return distanciaRecorrida;
     }
 
-    public void setRecorrido(ArrayList<Gasolinera> recorrido) {
+    public void setRecorrido(ArrayList<PeticionAtendida> recorrido) {
         this.recorrido = recorrido;
-    }
-
-    public void setPedidoAtendido(ArrayList<Integer> pedidoAtendido) {
-        this.pedidoAtendido = pedidoAtendido;
     }
 
     public void setIngresoAcumulado(double ingresoAcumulado) {
