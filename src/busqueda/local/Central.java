@@ -5,8 +5,8 @@ import IA.Gasolina.Distribucion;
 import IA.Gasolina.Gasolinera;
 import IA.Gasolina.Gasolineras;
 
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Central {
     private Gasolineras gasolineras;
@@ -199,15 +199,17 @@ public class Central {
     public ArrayList<Tuple<Integer,Integer>> getPosiblesViajesCamion(int camionI) {
         Camion camion = camiones.get(camionI);
         ArrayList<Tuple<Integer,Integer>> viajes = new ArrayList<>();
+        Map<String, Tuple<Integer, Integer>> map = new HashMap<>();
         for (int i = 0; i < numGasolineras; ++i){
             Gasolinera gasolinera1 = gasolineras.get(i);
             for (int j = 0; j < numGasolineras && gasolinera1.getPeticiones().size() > 0; ++j){
                 Gasolinera gasolinera2 = gasolineras.get(j);
-                if (i != j && camion.posibleViaje(gasolinera1, gasolinera2))
-                    viajes.add(new Tuple(i,j));
+                String key = String.valueOf(Math.min(i,j)) + String.valueOf(Math.max(i,j));
+                if (i != j && camion.posibleViaje(gasolinera1, gasolinera2) && !map.keySet().contains(key))
+                    map.put(key, new Tuple(i,j));
             }
         }
-        return viajes;
+        return new ArrayList<>(map.values());
     }
 
     public void realizarViaje(int camion, Tuple<Integer, Integer> viaje){
