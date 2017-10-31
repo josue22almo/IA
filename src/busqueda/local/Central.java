@@ -11,41 +11,62 @@ import java.util.Random;
 public class Central {
     private Gasolineras gasolineras;
     private static CentrosDistribucion centrosDistribucion;
-    private ArrayList<Camion> camiones;
+    private ArrayList<Itinerario> itinerariosCamiones;
+    private ArrayList<PeticionAtendida> totalPeticiones;
     private static int numGasolineras;
     private int seed;
 
     public Central(int ncen, int mult, int ngas, int seed) {
         centrosDistribucion = new CentrosDistribucion(ncen, mult, seed);
         gasolineras = new Gasolineras(ngas, seed);
-        camiones = new ArrayList<>();
-        colocarCamiones();
+        itinerariosCamiones = new ArrayList<>();
         numGasolineras = ngas;
         this.seed = seed;
+        totalPeticiones = new ArrayList<>();
+        generarListaPeticiones();
 
-        for(int camionI = 0; camionI < camiones.size(); ++camionI){
-            generarItinerario(camiones.get(camionI), seed);
+        for(int i = 0; i < ncen; ++i){
+            itinerariosCamiones.add(generarItinerario(centrosDistribucion.get(i), seed));
         }
     }
 
-    private void generarItinerario(Camion camion, int seed) {
+
+    //Genera una lista con todas las peticiones de todas las gasolineras
+    private void generarListaPeticiones() {
+        for(int i = 0; i<gasolineras.size(); ++i){
+            Gasolinera gas = gasolineras.get(i);
+            for(int numPet = 0; numPet<gas.getPeticiones().size(); ++numPet){
+                PeticionAtendida pa = new PeticionAtendida(gas, numPet);
+                totalPeticiones.add(pa);
+            }
+        }
+    }
+
+
+
+    private Itinerario generarItinerario(Distribucion cd, int seed) {
         Random myRandom = new Random();
         myRandom.setSeed(seed);
+        Itinerario it;
         for(int i = 0; i < 4; ++i){
-            Gasolinera gasol = gasolineras.get(myRandom.nextInt(99));
-            Integer numPet = gasol.getPeticiones().get(myRandom.nextInt(gasol.getPeticiones().size()-1));
-
+            Viaje v = new Viaje();
+            int a, b;
+            //a = myRandom.nextInt()
+            //
+            v.introducirRecorrido(totalPeticiones.);
 
 
 
         }
+        return it;
     }
-
+/*
     public Central(Central central) {
         this.gasolineras = central.gasolineras;
         copiarCapiones(central);
         copiarGasolineras(central);
     }
+
 
     private void copiarGasolineras(Central central) {
         gasolineras = new Gasolineras(numGasolineras, seed);
@@ -66,14 +87,7 @@ public class Central {
             camiones.add(new Camion(camion));
     }
 
-
-
-    private void colocarCamiones() {
-        for (Distribucion distribucion : centrosDistribucion) {
-            camiones.add(new Camion(distribucion));
-        }
-    }
-
+*/
 
     public static CentrosDistribucion getCentrosDistribucion() {
         return centrosDistribucion;
@@ -82,25 +96,14 @@ public class Central {
 
     public double getBeneficiosNetos() {
         double benficios = 0;
-        for (Camion camion : camiones)
-            benficios += camion.getBeneficiosNetos();
+        for (Itinerario itinerario : itinerariosCamiones)
+            benficios += itinerario.getIngresoTotal() - itinerario.getGastoTotal();
         return benficios;
     }
 
 
-    public double getMaximosBeneficiosActuales() {
-        double maxben = 0;
-        for (Gasolinera gasolinera : gasolineras) {
-            ArrayList peticiones = gasolinera.getPeticiones();
-            for (int i = 0; i < peticiones.size(); ++i) {
-                int dias = (int) peticiones.get(i);
-                if (dias == 0) maxben += 1000 * 1.02;
-                else maxben += 1000 * ((100 - Math.pow(2, dias)) / 100);
-            }
-        }
-        return maxben;
-    }
 
+    //Se debe modificar
     public double getPerdidasDiaSiguiente() {
         double perdidas = 0;
         for (Gasolinera gasolinera : gasolineras) {
@@ -118,71 +121,4 @@ public class Central {
         return perdidas;
     }
 
-
-
-
-    public double getTotalIngresos() {
-        double ingresosTotales = 0;
-        for (Camion camion : camiones) ingresosTotales += camion.getIngresos();
-        return ingresosTotales;
-    }
-
-    public double getTotalGastos() {
-        double gastosTotales = 0;
-        for (Camion camion : camiones) gastosTotales += camion.getGastos();
-        return gastosTotales;
-    }
-
-    public Gasolineras getGasolineras() {
-        return gasolineras;
-    }
-
-    public ArrayList<Camion> getCamiones() {
-        return camiones;
-    }
-
-    public void atenderPeticion(int indexCamion, int indexGasolinera, int numPet) {
-        Camion camion = camiones.get(indexCamion);
-        Gasolinera gasolinera = gasolineras.get(indexGasolinera);
-        camion.atenderPeticion(gasolinera, numPet);
-        gasolinera.getPeticiones().remove(numPet);
-    }
-
-    public void desplazarCamionASuCentroDeDistribucion(int indexCamion) {
-        camiones.get(indexCamion).volverAlCentroDeDistribucion();
-    }
-
-    public Camion getCamion(int index) {
-        return camiones.get(index);
-    }
-
-    public Gasolinera getGasolinera(int index) {
-        return gasolineras.get(index);
-    }
-
-    public boolean camionPuedeAtenderPeticion(int indexCamion, Gasolinera gasolinera) {
-        return camiones.get(indexCamion).puedoAtenderPeticion(gasolinera);
-    }
-
-    public double getDistanciaRecorrida() {
-        double distanciaRecorrida = 0.f;
-        for (Camion camion : camiones)
-            distanciaRecorrida += camion.getDistanciaRecorrida();
-        return distanciaRecorrida;
-    }
-
-    public void setCosteKM(int coste){
-        camiones.get(0).setCosteKM(coste);
-    }
-
-    public int getPeticionesAtendidas() {
-        int peticiones = 0;
-        for (Camion camion : camiones)
-            peticiones += camion.getPeticionesAtendidas();
-        return peticiones;
-    }
-
-    public void setDistanciaTotal(int distanciaTotal) {
-        Camion.DISTANCIAINICIAL = distanciaTotal;
-    }
 }

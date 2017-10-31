@@ -5,9 +5,14 @@ import IA.Gasolina.Gasolinera;
 public class PeticionAtendida {
 
     private Gasolinera gasolinera;
-    private Integer peticion;
+    private int numPet;
 
     public PeticionAtendida() {
+    }
+
+    public PeticionAtendida(Gasolinera gasolinera, Integer numPet) {
+        this.gasolinera = gasolinera;
+        this.numPet = numPet;
     }
 
     public Gasolinera getGasolinera() {
@@ -15,14 +20,14 @@ public class PeticionAtendida {
     }
 
     public Integer getPeticion() {
-        return peticion;
+        return numPet;
     }
 
     public void setGasolinera(Gasolinera gasolinera) {
         this.gasolinera = gasolinera;
     }
 
-    public void setPeticion(Integer peticion) {
-        this.peticion = peticion;
+    public void setPeticion(Integer numPet) {
+        this.numPet = numPet;
     }
 }

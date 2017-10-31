@@ -1,5 +1,6 @@
 package busqueda.local;
 
+import IA.Gasolina.Distribucion;
 import IA.Gasolina.Gasolinera;
 
 import java.util.ArrayList;
@@ -7,56 +8,50 @@ import java.util.ArrayList;
 public class Viaje {
 
     private ArrayList<PeticionAtendida> recorrido;
-    private double ingresoAcumulado;
-    private double gastoAcumulado;
+    private double ingresoViaje;
+    private double gastoViaje;
     private double distanciaRecorrida;
+    private Distribucion centroDistribucion;
 
 
     public Viaje() {
         this.recorrido = new ArrayList<>();
-        this.ingresoAcumulado = 0;
-        this.gastoAcumulado = 0;
+        this.ingresoViaje = 0;
+        this.gastoViaje = 0;
         this.distanciaRecorrida = 0;
 
     }
 
-    public Viaje(ArrayList<PeticionAtendida> recorrido, double ingresoAcumulado, double gastoAcumulado, double distanciaRecorrida) {
+    public Viaje(ArrayList<PeticionAtendida> recorrido, double ingresoViaje, double gastoViaje, double distanciaRecorrida, Distribucion cd) {
         this.recorrido = recorrido;
-        this.ingresoAcumulado = ingresoAcumulado;
-        this.gastoAcumulado = gastoAcumulado;
+        this.ingresoViaje = ingresoViaje;
+        this.gastoViaje = gastoViaje;
         this.distanciaRecorrida = distanciaRecorrida;
+        this.centroDistribucion = cd;
+    }
+
+    public void introducirRecorrido(PeticionAtendida p1, PeticionAtendida p2, Distribucion cd){
+
     }
 
     public ArrayList<PeticionAtendida> getRecorrido() {
         return recorrido;
     }
-
-
-    public double getIngresoAcumulado() {
-        return ingresoAcumulado;
+    
+    public double getIngresoViaje() {
+        return ingresoViaje;
     }
 
-    public double getGastoAcumulado() {
-        return gastoAcumulado;
+    public double getgastoViaje() {
+        return gastoViaje;
     }
 
     public double getDistanciaRecorrida() {
         return distanciaRecorrida;
     }
 
-    public void setRecorrido(ArrayList<PeticionAtendida> recorrido) {
-        this.recorrido = recorrido;
+    public Distribucion getCentroDistribucion() {
+        return centroDistribucion;
     }
 
-    public void setIngresoAcumulado(double ingresoAcumulado) {
-        this.ingresoAcumulado = ingresoAcumulado;
-    }
-
-    public void setGastoAcumulado(double gastoAcumulado) {
-        this.gastoAcumulado = gastoAcumulado;
-    }
-
-    public void setDistanciaRecorrida(double distanciaRecorrida) {
-        this.distanciaRecorrida = distanciaRecorrida;
-    }
 }
